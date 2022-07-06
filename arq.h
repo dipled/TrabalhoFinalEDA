@@ -1,8 +1,8 @@
 #include "stdio.h"
 #include "stdlib.h"
 #include "string.h"
-#define FRACASSO 0
-#define SUCESSO 1
+#define TRUE 1
+#define FALSE 0
 
 struct noPalavra
 {
