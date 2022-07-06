@@ -4,6 +4,8 @@
 #define TRUE 1
 #define FALSE 0
 
+//DEFINICAO DOS DADOS
+
 struct noPalavra
 {
     char palavra[40];
@@ -20,7 +22,11 @@ struct noLinha{
     struct noLinha *antLin;
 };
 
-struct descritor{
+struct desc{
     int numlinhas;
     struct noLinha *primeiraLinha;
 };
+
+//DEFINICAO DAS FUNCOES
+
+struct desc *cria(int numlinhas){}
