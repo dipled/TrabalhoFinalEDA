@@ -1,7 +1,6 @@
-#include "stdlib.h"
 #include "stdio.h"
+#include "stdlib.h"
 #include "string.h"
-
 #define FRACASSO 0
 #define SUCESSO 1
 
@@ -9,19 +8,19 @@ struct noPalavra
 {
     char palavra[40];
     int col;
-    struct noPalavra *prox;
-    struct noPalavra *ant;
+    struct noPalavra *proxPal;
+    struct noPalavra *antPal;
 };
 
 struct noLinha{
     int lin;
     int numPalavras;
     struct noPalavra *primeiraPalavra;
-    struct noLinha *prox;
-    struct noLinha *ant;
+    struct noLinha *proxLin;
+    struct noLinha *antLin;
 };
 
-struct multiLista{
+struct descritor{
     int numlinhas;
     struct noLinha *primeiraLinha;
 };
