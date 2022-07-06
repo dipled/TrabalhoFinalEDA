@@ -5,13 +5,23 @@
 #define FRACASSO 0
 #define SUCESSO 1
 
-struct linha
+struct noPalavra
 {
     char palavra[40];
-    int lin;
     int col;
-    struct linha *prox;
-    struct linha *ant;
+    struct noPalavra *prox;
+    struct noPalavra *ant;
+};
 
+struct noLinha{
+    int lin;
+    int numPalavras;
+    struct noPalavra *primeiraPalavra;
+    struct noLinha *prox;
+    struct noLinha *ant;
+};
 
+struct multiLista{
+    int numlinhas;
+    struct noLinha *primeiraLinha;
 };
