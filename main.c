@@ -12,7 +12,8 @@ int main(){
         return -1;
     }
     importaTexto(desc, fp);
-    
+    //printf("%s", desc->primeiraLinha->primeiraPalavra->palavra);
+    exibeTexto(desc, fp);
 
     return 0;
 }

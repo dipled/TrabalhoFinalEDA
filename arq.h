@@ -33,3 +33,4 @@ struct descritor
 
 struct descritor * cria();
 int importaTexto(struct descritor *desc, FILE *fp);
+int exibeTexto(struct descritor *desc, FILE *fp);

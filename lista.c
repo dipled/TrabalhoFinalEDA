@@ -40,8 +40,8 @@ int importaTexto(struct descritor *desc, FILE *fp)
         temp->primeiraPalavra = malloc(sizeof(struct noPalavra));
         struct noPalavra *aux2 = malloc(sizeof(struct noPalavra));
 
-        char *palavra = malloc(40*sizeof(char));
-            int i2 = 0;
+        char *palavra = malloc(40 * sizeof(char));
+        int i2 = 0;
         for (int i = 0; i < strlen(linha); i += 1)
         {
             if (linha[i] != ' ' && acabou == 0)
@@ -82,32 +82,6 @@ int importaTexto(struct descritor *desc, FILE *fp)
                 break;
             }
         }
-        /*char *palavra;
-        palavra = strtok(linha, " ");
-        while (palavra)
-        {
-            struct noPalavra *temp2 = malloc(sizeof(struct noPalavra));
-            if (temp2 == NULL)
-            {
-                return -1;
-            }
-            strcpy(temp2->palavra, palavra);
-            temp2->col = numCol;
-            if (numCol == 1)
-            {
-                temp2->antPal = NULL;
-                temp->primeiraPalavra = temp2;
-            }
-            else
-            {
-                temp2->antPal = aux2;
-            }
-            aux2->proxPal = temp2;
-            temp2->proxPal = NULL;
-            aux2 = temp2;
-            numCol += strlen(palavra) + 1;
-            palavra = strtok(NULL, ".!,? ");
-        }*/
         if (numLinha == 1)
         {
             temp->antLin = NULL;
@@ -122,3 +96,58 @@ int importaTexto(struct descritor *desc, FILE *fp)
         aux = temp;
     }
 }
+
+int exibeTexto(struct descritor *desc, FILE *fp)
+{
+    struct noLinha *aux = malloc(sizeof(struct noLinha));
+    if (aux != NULL)
+    {            printf("Teste1");
+
+        aux = desc->primeiraLinha;
+        while (aux->proxLin != NULL)
+        {
+            printf("Teste2");
+            struct noPalavra *aux2 = malloc(sizeof(struct noPalavra));
+            if (aux2 != NULL)
+            {            printf("Teste3");
+
+                aux2 = aux->primeiraPalavra;
+                while (aux2->proxPal != NULL)
+                {
+                    printf("Teste4");
+                    printf("%s", aux2->palavra);
+                    aux2 = aux2->proxPal;
+                }
+            }
+            printf("\n");
+            aux = aux->proxLin;
+        }
+    }
+}
+
+/*char *palavra;
+palavra = strtok(linha, " ");
+while (palavra)
+{
+    struct noPalavra *temp2 = malloc(sizeof(struct noPalavra));
+    if (temp2 == NULL)
+    {
+        return -1;
+    }
+    strcpy(temp2->palavra, palavra);
+    temp2->col = numCol;
+    if (numCol == 1)
+    {
+        temp2->antPal = NULL;
+        temp->primeiraPalavra = temp2;
+    }
+    else
+    {
+        temp2->antPal = aux2;
+    }
+    aux2->proxPal = temp2;
+    temp2->proxPal = NULL;
+    aux2 = temp2;
+    numCol += strlen(palavra) + 1;
+    palavra = strtok(NULL, ".!,? ");
+}*/
