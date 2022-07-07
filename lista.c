@@ -40,14 +40,17 @@ int importaTexto(struct descritor *desc, FILE *fp)
         temp->primeiraPalavra = malloc(sizeof(struct noPalavra));
         struct noPalavra *aux2 = malloc(sizeof(struct noPalavra));
 
-        char *palavra = malloc(40*sizeof(char));
-            int i2 = 0;
+        char *palavra = malloc(40 * sizeof(char));
+        int i2 = 0;
         for (int i = 0; i < strlen(linha); i += 1)
         {
             if (linha[i] != ' ' && acabou == 0)
             {
-                palavra[i2] = linha[i];
-                i2 += 1;
+                if (linha[i] != '\n')
+                {
+                    palavra[i2] = linha[i];
+                    i2 += 1;
+                }
             }
             else if (linha[i] == ' ')
             {
@@ -79,7 +82,8 @@ int importaTexto(struct descritor *desc, FILE *fp)
                 quantEspacos = 0;
                 acabou = 0;
                 i2 = 0;
-                break;
+                palavra = malloc(40 * sizeof(char));
+                i -= 1;
             }
         }
         /*char *palavra;
