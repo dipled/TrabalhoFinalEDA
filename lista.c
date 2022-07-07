@@ -6,10 +6,11 @@ struct descritor *cria()
     struct descritor *desc = malloc(sizeof(struct descritor));
     if (desc == NULL)
     {
-        return NULL; // O -1 foi escolhido como padrao de retorno de erro para todas as funcoes
+        return NULL;
     }
     desc->numLinhas = 0;
     desc->primeiraLinha = NULL;
+    return desc;
 }
 // Funcao de importacao do texto para a lista - Pedro Vargas
 int importaTexto(struct descritor *desc, FILE *fp)
