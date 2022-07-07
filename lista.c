@@ -42,7 +42,7 @@ int importaTexto(struct descritor *desc, FILE *fp)
         temp->primeiraPalavra = malloc(sizeof(struct noPalavra));
         struct noPalavra *aux2 = malloc(sizeof(struct noPalavra));
 
-        char *palavra = malloc(40 * sizeof(char));
+        char *palavra = calloc(40, sizeof(char));
         int i2 = 0;                                    // Esse i2 sera usado para servir de indice da palavra
                                                        // Representando cada caractere
         for (int i = 0; i < strlen(linha) + 1; i += 1) // Esse for le ate o final da linha
@@ -87,7 +87,7 @@ int importaTexto(struct descritor *desc, FILE *fp)
                 quantEspacos = 0;
                 acabouPal = FALSE;
                 i2 = 0;
-                palavra = malloc(40 * sizeof(char)); // Reset da palavra lida
+                memset(palavra,0,40*sizeof(char)); // Reset da palavra lida
                                                      // caractere da proxima palavra - Pedro Vargas
                 numPalavras += 1;
                 if (acabouLin)
