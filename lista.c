@@ -82,8 +82,6 @@ int importaTexto(struct descritor *desc, FILE *fp)
                 quantEspacos = 0;
                 acabou = 0;
                 i2 = 0;
-                if (palavra != NULL)
-                    free(palavra);
                 palavra = malloc(40 * sizeof(char)); // Reset da palavra lida
                                                      // caractere da proxima palavra - Pedro Vargas
                 numPalavras += 1;
