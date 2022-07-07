@@ -6,7 +6,7 @@ struct descritor *cria()
     struct descritor *desc = malloc(sizeof(struct descritor));
     if (desc == NULL)
     {
-        return -1; // O -1 foi escolhido como padrao de retorno de erro para todas as funcoes
+        return NULL; // O -1 foi escolhido como padrao de retorno de erro para todas as funcoes
     }
     desc->numlinhas = 0;
     desc->primeiraLinha = NULL;
@@ -40,14 +40,16 @@ int importaTexto(struct descritor *desc, FILE *fp)
         temp->primeiraPalavra = malloc(sizeof(struct noPalavra));
         struct noPalavra *aux2 = malloc(sizeof(struct noPalavra));
 
+        char *palavra = malloc(40*sizeof(char));
+            int i2 = 0;
         for (int i = 0; i < strlen(linha); i += 1)
         {
-            char *palavra;
-            if (linha[i] != " " && acabou == 0)
+            if (linha[i] != ' ' && acabou == 0)
             {
-                palavra += linha[i];
+                palavra[i2] = linha[i];
+                i2 += 1;
             }
-            else if (linha[i] == " ")
+            else if (linha[i] == ' ')
             {
                 quantEspacos += 1;
                 acabou = 1;
@@ -73,12 +75,16 @@ int importaTexto(struct descritor *desc, FILE *fp)
                 aux2->proxPal = temp2;
                 temp2->proxPal = NULL;
                 aux2 = temp2;
-                numCol += strlen(palavra) + quantEspacos;
+                numCol += strlen(palavra) + quantEspacos + 1;
                 quantEspacos = 0;
                 acabou = 0;
+                i2 = 0;
+                break;
             }
         }
-        /*while (palavra)
+        /*char *palavra;
+        palavra = strtok(linha, " ");
+        while (palavra)
         {
             struct noPalavra *temp2 = malloc(sizeof(struct noPalavra));
             if (temp2 == NULL)

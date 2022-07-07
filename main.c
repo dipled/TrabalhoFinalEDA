@@ -11,7 +11,7 @@ int main(){
         printf("Erro ao abrir o arquivo\n");
         return -1;
     }
-    
+    importaTexto(desc, fp);
     
 
     return 0;

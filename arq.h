@@ -31,5 +31,5 @@ struct descritor
 
 // Definicao das funcoes
 
-struct descritor *cria();
+struct descritor * cria();
 int importaTexto(struct descritor *desc, FILE *fp);
