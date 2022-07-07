@@ -29,8 +29,8 @@ int importaTexto(struct descritor *desc, FILE *fp)
     {
         numLinha += 1;
         int numCol = 1;
-        int quantEspacos = 0;
         int acabou = 0;
+        int quantEspacos = 0;
         struct noLinha *temp = malloc(sizeof(struct noLinha));
         if (temp == NULL)
         {
@@ -75,6 +75,7 @@ int importaTexto(struct descritor *desc, FILE *fp)
                 aux2 = temp2;
                 numCol += strlen(palavra) + quantEspacos;
                 quantEspacos = 0;
+                acabou = 0;
             }
         }
         /*while (palavra)
