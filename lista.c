@@ -1,6 +1,6 @@
 #include "arq.h"
 
-// Funcao de criacao do descritor da lista - P.V
+// Funcao de criacao do descritor da lista - Pedro Vargas
 struct descritor *cria()
 {
     struct descritor *desc = malloc(sizeof(struct descritor));
@@ -11,7 +11,7 @@ struct descritor *cria()
     desc->numLinhas = 0;
     desc->primeiraLinha = NULL;
 }
-// Funcao de importacao do texto para a lista - P.V
+// Funcao de importacao do texto para a lista - Pedro Vargas
 int importaTexto(struct descritor *desc, FILE *fp)
 {
     int numLinha = 0;
@@ -94,60 +94,6 @@ int importaTexto(struct descritor *desc, FILE *fp)
                 i -= 1; // Temos que diminuir o indice em uma unidade, pois lemos ate o primeiro
             }
         }
-        /*char *palavra;
-        palavra = strt*char *palavra;
-        palavra = strtok(linha, " ");
-        while (palavra)
-        {
-            struct noPalavra *temp2 = malloc(sizeof(struct noPalavra));
-            if (temp2 == NULL)
-            {
-                return -1;
-            }
-            strcpy(temp2->palavra, palavra);
-            temp2->col = numCol;
-            if (numCol == 1)
-            {
-                temp2->antPal = NULL;
-                temp->primeiraPalavra = temp2;
-            }
-            else
-            {
-                temp2->antPal = aux2;
-            }
-            aux2->proxPal = temp2;
-            temp2->proxPal = NULL;
-            aux2 = temp2;
-            numCol += strlen(palavra) + 1;
-            palavra = strtok(NULL, ".!,? ");
-        }*/
-        /*char *palavra;
-     palavra = strt*char *palavra;
-     palavra = strtok(linha, " ");
-     while (palavra)
-     {
-         struct noPalavra *temp2 = malloc(sizeof(struct noPalavra));
-         if (temp2 == NULL)
-         {
-             return -1;
-         }
-         strcpy(temp2->palavra, palavra);
-         temp2->col = numCol;
-         if (numCol == 1)
-         {
-             temp2->antPal = NULL;
-             temp->primeiraPalavra = temp2;
-         }
-         else
-         {
-             temp2->antPal = aux2;
-         }
-         aux2->proxPal = temp2;
-         temp2->proxPal = NULL;
-         aux2 = temp2;
-         numCol += strlen(palavra) + 1;
-         palavra = strtok(NULL, ".!,? ");
-     }*/
         if (numLinha == 1)
         {
             temp->antLin = NULL;
@@ -163,4 +109,37 @@ int importaTexto(struct descritor *desc, FILE *fp)
         temp->numPalavras = numPalavras;
     }
     desc->numLinhas = numLinha;
+}
+//Funcao que exibe o texto a partir da lista - Gustavo Felipe
+int exibeTexto(struct descritor *desc)
+{
+    struct noLinha *aux = malloc(sizeof(struct noLinha));
+    if (aux != NULL)
+    {
+
+        aux = desc->primeiraLinha;
+        while (aux != NULL)
+        {
+            int col = 1;
+            struct noPalavra *aux2 = malloc(sizeof(struct noPalavra));
+            if (aux2 != NULL)
+            {
+                aux2 = aux->primeiraPalavra;
+                while (aux2->palavra != NULL)
+                {
+                    while (col < aux2->col)
+                    {
+                        printf(" ");
+                        col+=1;
+                    }
+                    printf("%s", aux2->palavra);
+                    col += strlen(aux2->palavra);
+                    aux2 = aux2->proxPal;
+                }
+            }
+            printf("\n");
+
+            aux = aux->proxLin;
+        }
+    }
 }

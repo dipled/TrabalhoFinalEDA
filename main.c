@@ -12,6 +12,7 @@ int main(){
         return -1;
     }
     importaTexto(desc, fp);
+    exibeTexto(desc);
     
 
     return 0;
