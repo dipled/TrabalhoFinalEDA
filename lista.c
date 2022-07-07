@@ -89,7 +89,7 @@ int importaTexto(struct descritor *desc, FILE *fp)
                 acabouPal = FALSE;
                 i2 = 0;
                 memset(palavra,0,40*sizeof(char)); // Reset da palavra lida
-                                                     // caractere da proxima palavra - Pedro Vargas
+                                                   // caractere da proxima palavra - Pedro Vargas
                 numPalavras += 1;
                 if (acabouLin)
                 {
