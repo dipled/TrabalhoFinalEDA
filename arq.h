@@ -4,7 +4,7 @@
 #define TRUE 1
 #define FALSE 0
 
-//DEFINICAO DOS DADOS
+// Definicao dos structs -Pedro Vargas
 
 struct noPalavra
 {
@@ -14,7 +14,8 @@ struct noPalavra
     struct noPalavra *antPal;
 };
 
-struct noLinha{
+struct noLinha
+{
     int lin;
     int numPalavras;
     struct noPalavra *primeiraPalavra;
@@ -22,11 +23,13 @@ struct noLinha{
     struct noLinha *antLin;
 };
 
-struct desc{
+struct descritor
+{
     int numlinhas;
     struct noLinha *primeiraLinha;
 };
 
-//DEFINICAO DAS FUNCOES
+// Definicao das funcoes
 
-struct desc *cria(int numlinhas){}
+struct descritor *cria();
+int importaTexto(struct descritor *desc, FILE *fp);
