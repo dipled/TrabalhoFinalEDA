@@ -30,7 +30,8 @@ int importaTexto(struct descritor *desc, FILE *fp)
         int numPalavras = 0;
         numLinha += 1;
         int numCol = 1;
-        int acabou = 0;
+        int acabouPal = FALSE;
+        int acabouLin = FALSE;
         int quantEspacos = 0;
         struct noLinha *temp = malloc(sizeof(struct noLinha));
         if (temp == NULL)
@@ -46,19 +47,23 @@ int importaTexto(struct descritor *desc, FILE *fp)
                                                        // Representando cada caractere
         for (int i = 0; i < strlen(linha) + 1; i += 1) // Esse for le ate o final da linha
         {
-            if (linha[i] != ' ' && acabou == 0 && linha[i] != '\n' && linha[i] != '\0')
+            if (linha[i] == '\n' || linha[i] == '\0')
+            {
+                acabouLin = TRUE;
+            }
+            if (linha[i] == ' ') // A logica por tras desse bloco else if eh basicamente contar quantos espacos
+            {                    // tem apos a atual palavra e settar a flag que a palavra acabou
+                quantEspacos += 1;
+                acabouPal = TRUE;
+            }
+            if (!acabouLin && !acabouPal)
             {
 
                 palavra[i2] = linha[i];
                 i2 += 1;
             }
-            else if (linha[i] == ' ') // A logica por tras desse bloco else if eh basicamente contar quantos espacos
-            {                         // tem apos a atual palavra e settar a flag que a palavra acabou
-                quantEspacos += 1;
-                acabou = 1;
-            }
-            else // Condicao indicando que a palavra ja acabou e os espacos tambem
-            {    // ou seja, a proxima palavra comecou
+            if (acabouLin || (acabouPal && linha[i] != ' ')) // Condicao indicando que a palavra ja acabou e os espacos tambem, ou que a linha acabou
+            {                                                // ou seja, a proxima palavra comecou
                 struct noPalavra *temp2 = malloc(sizeof(struct noPalavra));
                 if (temp2 == NULL)
                 {
@@ -80,12 +85,12 @@ int importaTexto(struct descritor *desc, FILE *fp)
                 aux2 = temp2;
                 numCol += strlen(palavra) + quantEspacos;
                 quantEspacos = 0;
-                acabou = 0;
+                acabouPal = FALSE;
                 i2 = 0;
                 palavra = malloc(40 * sizeof(char)); // Reset da palavra lida
                                                      // caractere da proxima palavra - Pedro Vargas
                 numPalavras += 1;
-                if (linha[i] == '\n' || linha[i] == '\0')
+                if (acabouLin)
                 {
                     break;
                 }
@@ -108,7 +113,7 @@ int importaTexto(struct descritor *desc, FILE *fp)
     }
     desc->numLinhas = numLinha;
 }
-//Funcao que exibe o texto a partir da lista - Gustavo Felipe
+// Funcao que exibe o texto a partir da lista - Gustavo Felipe
 int exibeTexto(struct descritor *desc)
 {
     struct noLinha *aux = malloc(sizeof(struct noLinha));
@@ -128,7 +133,7 @@ int exibeTexto(struct descritor *desc)
                     while (col < aux2->col)
                     {
                         printf(" ");
-                        col+=1;
+                        col += 1;
                     }
                     printf("%s", aux2->palavra);
                     col += strlen(aux2->palavra);
