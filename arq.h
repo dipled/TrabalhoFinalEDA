@@ -25,7 +25,7 @@ struct noLinha
 
 struct descritor
 {
-    int numlinhas;
+    int numLinhas;
     struct noLinha *primeiraLinha;
 };
 
