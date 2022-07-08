@@ -148,21 +148,22 @@ int exibeTexto(struct descritor *desc)
     }
 }
 
-int insercao(struct descritor *desc, char *palavra, int linha, int coluna)
+int insercaoPorPos(struct descritor *desc, char *palavra, int linha, int coluna)
 {
     struct noLinha *aux = malloc(sizeof(struct noLinha));
-    struct noPalavra *aux2 = malloc(sizeof(struct noPalavra));
+    struct noPalavra *aux2 = malloc(sizeof(struct noPalavra)); 
+
     
     if (aux != NULL && aux2 != NULL)
     {
         aux = desc->primeiraLinha;
-        while (aux->lin != linha)
+        while (aux->lin != linha) // Verifica se é a linha desejada //
         {
-            if (aux->proxLin != NULL)
+            if (aux->proxLin != NULL) // Se a proxima linha existir pula pra ela //
             {
                 aux = aux->proxLin;
             }
-            else
+            else // Se não existir, cria a proxima linha e pula pra ela //
             {
                 aux->proxLin = malloc(sizeof(struct noLinha)); 
                 struct noLinha *temp = malloc(sizeof(struct noLinha));
@@ -180,11 +181,10 @@ int insercao(struct descritor *desc, char *palavra, int linha, int coluna)
                 aux = aux->proxLin;
             }
         }
-  
         aux2 = aux->primeiraPalavra;
-        if (aux2 == NULL)
+        if (aux2 == NULL) // É uma linha sem palavras //
         {
-            aux2 = (struct noPalavra *) malloc(sizeof(struct noPalavra)); 
+            aux2 = malloc(sizeof(struct noPalavra)); 
             aux2->col = coluna;
             aux2->antPal = NULL;
             aux2->proxPal = NULL;
@@ -192,14 +192,17 @@ int insercao(struct descritor *desc, char *palavra, int linha, int coluna)
         }
         else
         {   
-            if (aux2->col > coluna)
+            if (aux2->col < coluna && aux2->col+strlen(aux2->palavra) > coluna) // Verifica se as colunas da primera palavra está entre coluna desejada //
+            {
+                return 0;
+            }  
+            if (aux2->col > coluna) // A palavra inserida será a primeira palavra //
             {
                 struct noPalavra *temp2 = malloc(sizeof(struct noPalavra));
                 if (temp2 == NULL)
                 {
                     return -1;
                 }
-                temp2 = (struct noPalavra *) malloc(sizeof(struct noPalavra));
                 temp2->col = coluna;
                 strcpy(temp2->palavra, palavra);
                 temp2->proxPal = aux2;
@@ -208,7 +211,7 @@ int insercao(struct descritor *desc, char *palavra, int linha, int coluna)
                 aux2->antPal = temp2;
                 free(temp2);       
                 aux2->col = aux2->col + strlen(palavra);             
-                while (aux2 -> proxPal != NULL)
+                while (aux2 -> proxPal != NULL) // Arruma a coluna das proximas palavras da linha //
                 {
                     aux2->col = aux2->col + strlen(palavra);
                     aux2 = aux2->proxPal;
@@ -216,11 +219,15 @@ int insercao(struct descritor *desc, char *palavra, int linha, int coluna)
             }
             else
             {
-                while (aux2->col < coluna && aux2->proxPal!=NULL)
+                while (aux2->col < coluna && aux2->proxPal!=NULL) // Verifica se passou da coluna desejada, ou seja, a palavra é a anterior de Aux2 // 
                 {
                     aux2 = aux2->proxPal;
+                    if (aux2->col < coluna && aux2->col+strlen(aux2->palavra) > coluna) // Verifica se as colunas da palavra está entre coluna desejada //
+                    {
+                        return 0;
+                    }      
                 }
-                if (aux2->proxPal==NULL)
+                if (aux2->proxPal==NULL) // A palavra é a ultima palavra //
                 {
                     aux2->proxPal = malloc(sizeof(struct noPalavra)); 
                     struct noPalavra *temp2 = malloc(sizeof(struct noPalavra));
@@ -235,14 +242,13 @@ int insercao(struct descritor *desc, char *palavra, int linha, int coluna)
                     strcpy(temp2->palavra, palavra);
                     free(temp2);
                 }
-                else
+                else // A palavra está entre duas palavras //
                 {
                     struct noPalavra *temp2 = malloc(sizeof(struct noPalavra));
                     if (temp2 == NULL)
                     {
                         return -1;
                     }
-                    temp2 = (struct noPalavra *) malloc(sizeof(struct noPalavra));
                     temp2->col = coluna;
                     strcpy(temp2->palavra, palavra);
                     temp2->proxPal = aux2;
@@ -251,7 +257,7 @@ int insercao(struct descritor *desc, char *palavra, int linha, int coluna)
                     aux2->antPal = temp2;
                     free(temp2);  
                     aux2->col = aux2->col + strlen(palavra);                  
-                    while (aux2 -> proxPal != NULL)
+                    while (aux2 -> proxPal != NULL) // Arruma a coluna das proximas palavras da linha //
                     {
                         aux2->col = aux2->col + strlen(palavra);
                         aux2 = aux2->proxPal;
@@ -261,6 +267,35 @@ int insercao(struct descritor *desc, char *palavra, int linha, int coluna)
         }
     }
     return 0;
+}
+
+int insercao(struct descritor *desc, char *palavra)
+{
+    struct noLinha *aux = malloc(sizeof(struct noLinha));
+    struct noPalavra *aux2 = malloc(sizeof(struct noPalavra));
+
+    if (aux != NULL && aux2 != NULL)
+    {
+        aux = desc->primeiraLinha;
+        while (aux->proxLin != NULL)
+        {
+            aux = aux->proxLin;
+        }
+
+        aux2 = aux->primeiraPalavra;
+
+        while (aux2->proxPal != NULL)
+        {
+            aux2 = aux2->proxPal;
+        }
+        struct noPalavra *temp = malloc(sizeof(struct noPalavra));
+        temp->col = aux2->col + strlen(aux2->palavra) + 1;
+        strcpy(temp->palavra, palavra);
+        aux2->proxPal = temp;
+        temp->proxPal = NULL;
+        temp->antPal = aux;
+        free(temp);
+    }
 }
 
 int atualizaArquivo(struct descritor *desc, FILE *fp)
