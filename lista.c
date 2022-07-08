@@ -147,3 +147,118 @@ int exibeTexto(struct descritor *desc)
         }
     }
 }
+
+int insercao(struct descritor *desc, char *palavra, int linha, int coluna)
+{
+    struct noLinha *aux = malloc(sizeof(struct noLinha));
+    struct noPalavra *aux2 = malloc(sizeof(struct noPalavra));
+    
+    if (aux != NULL && aux2 != NULL)
+    {
+        aux = desc->primeiraLinha;
+        while (aux->lin != linha)
+        {
+            if (aux->proxLin != NULL)
+            {
+                aux = aux->proxLin;
+            }
+            else
+            {
+                aux->proxLin = malloc(sizeof(struct noLinha)); 
+                struct noLinha *temp = malloc(sizeof(struct noLinha));
+                if (temp == NULL)
+                {
+                    return -1;
+                }
+                temp = aux->proxLin;
+                temp->numPalavras = 0;
+                temp->primeiraPalavra = NULL;
+                temp->antLin = aux;
+                temp->proxLin = NULL;
+                temp->lin = aux->lin + 1;
+                free(temp);
+                aux = aux->proxLin;
+            }
+        }
+  
+        aux2 = aux->primeiraPalavra;
+        if (aux2 == NULL)
+        {
+            aux2 = (struct noPalavra *) malloc(sizeof(struct noPalavra)); 
+            aux2->col = coluna;
+            aux2->antPal = NULL;
+            aux2->proxPal = NULL;
+            strcpy(aux2->palavra, palavra);
+        }
+        else
+        {   
+            if (aux2->col > coluna)
+            {
+                struct noPalavra *temp2 = malloc(sizeof(struct noPalavra));
+                if (temp2 == NULL)
+                {
+                    return -1;
+                }
+                temp2 = (struct noPalavra *) malloc(sizeof(struct noPalavra));
+                temp2->col = coluna;
+                strcpy(temp2->palavra, palavra);
+                temp2->proxPal = aux2;
+                temp2->antPal = NULL;
+                aux->primeiraPalavra = temp2;
+                aux2->antPal = temp2;
+                free(temp2);       
+                aux2->col = aux2->col + strlen(palavra);             
+                while (aux2 -> proxPal != NULL)
+                {
+                    aux2->col = aux2->col + strlen(palavra);
+                    aux2 = aux2->proxPal;
+                }
+            }
+            else
+            {
+                while (aux2->col < coluna && aux2->proxPal!=NULL)
+                {
+                    aux2 = aux2->proxPal;
+                }
+                if (aux2->proxPal==NULL)
+                {
+                    aux2->proxPal = malloc(sizeof(struct noPalavra)); 
+                    struct noPalavra *temp2 = malloc(sizeof(struct noPalavra));
+                    if (temp2 == NULL)
+                    {
+                        return -1;
+                    }
+                    temp2 = aux2->proxPal;
+                    temp2->proxPal = NULL;
+                    temp2->col = coluna;
+                    temp2->antPal = aux2;
+                    strcpy(temp2->palavra, palavra);
+                    free(temp2);
+                }
+                else
+                {
+                    struct noPalavra *temp2 = malloc(sizeof(struct noPalavra));
+                    if (temp2 == NULL)
+                    {
+                        return -1;
+                    }
+                    temp2 = (struct noPalavra *) malloc(sizeof(struct noPalavra));
+                    temp2->col = coluna;
+                    strcpy(temp2->palavra, palavra);
+                    temp2->proxPal = aux2;
+                    temp2->antPal = aux2->antPal;
+                    aux2->antPal->proxPal = temp2;
+                    aux2->antPal = temp2;
+                    free(temp2);  
+                    aux2->col = aux2->col + strlen(palavra);                  
+                    while (aux2 -> proxPal != NULL)
+                    {
+                        aux2->col = aux2->col + strlen(palavra);
+                        aux2 = aux2->proxPal;
+                    }
+               }  
+            }
+        }
+    }
+    return 0;
+}
