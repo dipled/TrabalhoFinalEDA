@@ -232,20 +232,77 @@ int numTotalPalavra(struct descritor *desc)
     return totPalavra;
 }
 
-
-int edicaoPalavra(struct descritor *desc, int lin, int col, FILE *fp)
+int edicaoPalavra(struct descritor *desc, int lin, int col, char *pal)
 {
     struct noLinha *aux = malloc(sizeof(struct noLinha));
     struct noPalavra *aux2 = malloc(sizeof(struct noPalavra));
+    int espaco = 0;
     if (aux == NULL && aux2 == NULL)
         return -1;
     aux = desc->primeiraLinha;
-    for (int i = 0; i < lin; i++)
-        aux = aux->proxLin;
-    aux2 = aux->primeiraPalavra;
-    while (aux2->col != col)
-        aux2 = aux2->proxPal;
-
+    while (aux != NULL)
     {
+        aux2 = aux->primeiraPalavra;
+        while (aux2->palavra != NULL)
+        {
+            if (aux->lin == lin && aux2->col == col)
+            {
+                espaco = strlen(pal) - strlen(aux2->palavra);
+                strcpy(aux2->palavra, pal);
+                if (aux2->proxPal != NULL)
+                {
+                    while (aux2->proxPal != NULL)
+                    {
+                        aux2->proxPal->col = aux2->proxPal->col + espaco;
+                        aux2 = aux2->proxPal;
+                    }
+                }
+            }
+            aux2 = aux2->proxPal;
+        }
+        aux = aux->proxLin;
     }
+
+    return 0;
+}
+
+int removePalavraPos(struct descritor *desc, int lin, int col)
+{
+    struct noLinha *aux = malloc(sizeof(struct noLinha));
+    struct noPalavra *aux2 = malloc(sizeof(struct noPalavra));
+    int removeu = FALSE;
+
+    if (aux == NULL || aux2 == NULL)
+        return -1;
+    aux = desc->primeiraLinha;
+
+    while (aux != NULL)
+    {
+        aux2 = aux->primeiraPalavra;
+        while (aux2->palavra != NULL)
+        {
+            if (aux->lin == lin && aux2->col == col)
+            {
+                removeu = TRUE;
+                if (aux2->antPal != NULL)
+                {
+                    aux2->antPal->proxPal = aux2->proxPal;
+                }
+                else
+                {
+                    aux->primeiraPalavra = aux2->proxPal;
+                    aux2->proxPal->antPal == NULL;
+                }
+                if (aux2->proxPal != NULL)
+                {
+                    aux2->proxPal->antPal = aux2->antPal;
+                }
+                free(aux2);
+                aux->numPalavras -= 1;
+            }
+            aux2 = aux2->proxPal;
+        }
+        aux = aux->proxLin;
+    }
+    return removeu;
 }

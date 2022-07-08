@@ -37,3 +37,5 @@ int exibeTexto(struct descritor *desc);
 int numTotalCertaPalavra(struct descritor *desc, char *palavra);
 int *buscaPalavra(struct descritor *desc, char *palavra);
 int numTotalPalavra(struct descritor *desc);
+int edicaoPalavra(struct descritor *desc, int lin, int col, char *pal);
+int removePalavraPos(struct descritor *desc, int lin, int col);
