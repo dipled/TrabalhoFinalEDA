@@ -88,9 +88,10 @@ int importaTexto(struct descritor *desc, FILE *fp)
                 quantEspacos = 0;
                 acabouPal = FALSE;
                 i2 = 0;
+                if (palavra[0] != '\n' && palavra[0] != '\0') // nao contar linhas vazias como palavra - Gustavo F. Pereira
+                    numPalavras += 1;
                 memset(palavra, 0, 40 * sizeof(char)); // Reset da palavra lida
-                                                       // caractere da proxima palavra - Pedro V
-                numPalavras += 1;
+                                                       // caractere da proxima palavra - Pedro Vargas
                 if (acabouLin)
                 {
                     break;
@@ -119,31 +120,29 @@ int importaTexto(struct descritor *desc, FILE *fp)
 int exibeTexto(struct descritor *desc)
 {
     struct noLinha *aux = malloc(sizeof(struct noLinha));
-    if (aux != NULL)
+    struct noPalavra *aux2 = malloc(sizeof(struct noPalavra)); // mudei os mallocs pra fora do while pra nao usar malloc varias vezes sem necessidade Gustavo F. P.
+
+    if (aux != NULL && aux2 != NULL)
     {
 
         aux = desc->primeiraLinha;
         while (aux != NULL)
         {
             int col = 1;
-            struct noPalavra *aux2 = malloc(sizeof(struct noPalavra));
-            if (aux2 != NULL)
+            aux2 = aux->primeiraPalavra;
+            while (aux2->palavra != NULL)
             {
-                aux2 = aux->primeiraPalavra;
-                while (aux2->palavra != NULL)
+                while (col < aux2->col)
                 {
-                    while (col < aux2->col)
-                    {
-                        printf(" ");
-                        col += 1;
-                    }
-                    printf("%s", aux2->palavra);
-                    col += strlen(aux2->palavra);
-                    aux2 = aux2->proxPal;
+                    printf(" ");
+                    col += 1;
                 }
+                printf("%s", aux2->palavra);
+                col += strlen(aux2->palavra);
+                aux2 = aux2->proxPal;
             }
-            printf("\n");
 
+            printf("\n");
             aux = aux->proxLin;
         }
     }
@@ -215,4 +214,18 @@ int *buscaPalavra(struct descritor *desc, char *palavra)
     if (ocorrencias[0] == 0)
         return NULL; // Retorna NULL se a palavra nao ocorreu at all
     return ocorrencias;
+}
+int numTotalPalavra(struct descritor *desc)
+{
+    struct noLinha *aux = malloc(sizeof(struct noLinha));
+    int totPalavra = 0;
+    if (aux == NULL)
+        return -1;
+    aux = desc->primeiraLinha;
+    while (aux != NULL)
+    {
+        totPalavra += aux->numPalavras;
+        aux = aux->proxLin;
+    }
+    return totPalavra;
 }

@@ -25,5 +25,7 @@ int main()
             printf("(%d,%d)\n",ocorrencias[i+1],ocorrencias[i+2]);
         }
     }
+    printf("Numero de palavrsa: %d\n",numTotalPalavra(desc));
+
     return 0;
 }
