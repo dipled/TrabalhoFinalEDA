@@ -113,6 +113,7 @@ int importaTexto(struct descritor *desc, FILE *fp)
         temp->numPalavras = numPalavras;
     }
     desc->numLinhas = numLinha;
+    return 0;
 }
 // Funcao que exibe o texto a partir da lista - Gustavo Felipe
 int exibeTexto(struct descritor *desc)
@@ -146,4 +147,5 @@ int exibeTexto(struct descritor *desc)
             aux = aux->proxLin;
         }
     }
+    return 0;
 }
