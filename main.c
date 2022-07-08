@@ -19,10 +19,10 @@ int main()
     importaTexto(desc, fp);
     exibeTexto(desc);
     printf("Numero total da palavra Teste: %d\n",numTotalCertaPalavra(desc, "Teste"));
-    int *ocorrencias = buscaPalavra(desc, "Teste");
+    int *ocorrencias = buscaPalavra(desc, "1");
     if(ocorrencias != NULL){
-        for(int i = 0; i < sizeof(ocorrencias)/(sizeof (int))*2; i += 2){
-            printf("(%d, %d)\n", ocorrencias[i], ocorrencias[i+1]);
+        for(int i = 0; i < ocorrencias[0]*2; i += 2){
+            printf("(%d,%d)\n",ocorrencias[i+1],ocorrencias[i+2]);
         }
     }
     return 0;
