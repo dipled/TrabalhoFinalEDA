@@ -299,7 +299,7 @@ int atualizaArquivo(struct descritor *desc, FILE *fp)
     }
     fclose(novoFp);
     fclose(fp);
-    rename("arqTemp.txt", "teste.txt");
     rename("teste.txt", "OldArquivo.txt");
+    rename("arqTemp.txt", "teste.txt");
     return 0;
 }
