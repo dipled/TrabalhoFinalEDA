@@ -2,6 +2,13 @@
 #include <string.h>
 #include <stdlib.h>
 #include "arq.h"
+void exibe(struct descritor *desc);
+void removePal(struct descritor *desc);
+void removePos(struct descritor *desc);
+void conta(struct descritor *desc);
+void busca(struct descritor *desc);
+void contaTotal(struct descritor *desc);
+
 int main()
 {
     struct descritor *desc = cria();
@@ -18,63 +25,98 @@ int main()
     }
     importaTexto(desc, fp);
     int escolha = -1;
-    char *palavra = calloc(40, sizeof(char));
     while (1)
     {
         printf("Digite 1 para exibir o texto\nDigite 2 para buscar uma palavra do texto\n");
         printf("Digite 3 para contar uma determinada palavra\nDigite 4 para contar o total de palavras\n");
-        printf("Digite 5 para remover uma palavra\n");
+        printf("Digite 5 para remover uma palavra\nDigite 6 para remover uma palavra de uma linha e coluna\n");
         printf("Digite 0 para sair do programa\n");
         scanf("%d", &escolha);
         switch ((escolha))
         {
         case 1:
-            exibeTexto(desc);
+            exibe(desc);
             break;
         case 2:
-            printf("Digite uma palavra para ser buscada\n");
-            scanf(" %[^\n]s", palavra);
-            int *ocorrencia = buscaPalavra(desc, palavra);
-            if (ocorrencia != NULL)
-            {
-                if (ocorrencia[0] == 0)
-                    printf("Palavra nao encontrada\n");
-                else
-                {
-                    printf("Ocorrencias:\n");
-                    for (int i = 0; i < ocorrencia[0] * 2; i += 2)
-                    {
-                        printf("(%d,%d)", ocorrencia[i + 1], ocorrencia[i + 2]);
-                    }
-                }
-                printf("\n");
-            }
+            busca(desc);
             break;
         case 3:
-            printf("Digite uma palavra para ser contada\n");
-            scanf(" %[^\n]s", palavra);
-            printf("A palavra %s ocorre %d vezes\n", palavra, numTotalCertaPalavra(desc, palavra));
+            conta(desc);
             break;
         case 4:
-            printf("Total de palavras:%d\n", numTotalPalavra(desc));
+            contaTotal(desc);
             break;
         case 5:
-            printf("Digite a palavra a ser removida\n");
-            scanf(" %[^\n]s", palavra);
-            if (removePalavra(desc, palavra))
-            {
-                printf("Palavra removida com sucesso\n");
-            }
-            else
-            {
-                printf("Erro ao remover a palavra\n");
-            }
+            removePal(desc);
+            break;
+        case 6:
+            removePos(desc);
             break;
         case 0:
             return 0;
         default:
             break;
         }
-        memset(palavra, 0, 40 * sizeof(char));
     }
+}
+
+void exibe(struct descritor *desc)
+{
+    exibeTexto(desc);
+}
+void contaTotal(struct descritor *desc)
+{
+    printf("Total de palavras:%d\n", numTotalPalavra(desc));
+}
+void conta(struct descritor *desc)
+{
+    char *palavra = calloc(40, sizeof(char));
+    printf("Digite uma palavra para ser contada\n");
+    scanf(" %[^\n]s", palavra);
+    printf("A palavra %s ocorre %d vezes\n", palavra, numTotalCertaPalavra(desc, palavra));
+}
+void busca(struct descritor *desc)
+{
+    char *palavra = calloc(40, sizeof(char));
+    printf("Digite uma palavra para ser buscada\n");
+    scanf(" %[^\n]s", palavra);
+    int *ocorrencia = buscaPalavra(desc, palavra);
+    if (ocorrencia != NULL)
+    {
+        if (ocorrencia[0] == 0)
+            printf("Palavra nao encontrada\n");
+        else
+        {
+            printf("Ocorrencias:\n");
+            for (int i = 0; i < ocorrencia[0] * 2; i += 2)
+            {
+                printf("(%d,%d)", ocorrencia[i + 1], ocorrencia[i + 2]);
+            }
+        }
+        printf("\n");
+    }
+}
+void removePal(struct descritor *desc)
+{
+    char *palavra = calloc(40, sizeof(char));
+    printf("Digite a palavra a ser removida\n");
+    scanf(" %[^\n]s", palavra);
+    if (removePalavra(desc, palavra))
+    {
+        printf("Palavra removida com sucesso\n");
+    }
+    else
+    {
+        printf("Erro ao remover a palavra\n");
+    }
+}
+void removePos(struct descritor *desc)
+{
+    int lin, col;
+    printf("Digite a linha e a coluna da palavra a ser removida\n");
+    scanf("%d %d",&lin,&col);
+    if(removePalavraPos(desc, lin, col))
+        printf("Palavra removida com sucesso\n");
+    else
+        printf("Palavra nao encontrada\n");
 }
