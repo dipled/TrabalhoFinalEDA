@@ -262,3 +262,44 @@ int insercao(struct descritor *desc, char *palavra, int linha, int coluna)
     }
     return 0;
 }
+
+int atualizaArquivo(struct descritor *desc, FILE *fp)
+{
+    FILE *novoFp = fopen("arqTemp.txt","w");
+    if (novoFp == NULL)
+    {
+        printf("Erro ao abrir o arquivo\n");
+        return -1;
+    }
+    struct noLinha *aux = malloc(sizeof(struct noLinha));
+    struct noPalavra *aux2 = malloc(sizeof(struct noPalavra));
+
+    if (aux != NULL && aux2 != NULL)
+    {
+        aux = desc->primeiraLinha;
+        while (aux != NULL)
+        {
+            int col = 1;
+            aux2 = aux->primeiraPalavra;
+            while (aux2->palavra != NULL)
+            {
+                while (col < aux2->col)
+                {
+                    fprintf(novoFp, " ");
+                    col += 1;
+                }
+                fprintf(novoFp, "%s", aux2->palavra);
+                col += strlen(aux2->palavra);
+                aux2 = aux2->proxPal;
+            }
+
+            fprintf(novoFp, "\n");
+            aux = aux->proxLin;
+        }
+    }
+    fclose(novoFp);
+    fclose(fp);
+    rename("arqTemp.txt", "teste.txt");
+    rename("teste.txt", "OldArquivo.txt");
+    return 0;
+}
