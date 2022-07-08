@@ -177,3 +177,39 @@ int numTotalCertaPalavra(struct descritor *desc, char *palavra) // Modifiquei pa
     return totPalavra; // Mudei o printf() que tinha aqui para apenas retornar a quantidade de ocorrencias de uma palavra
                        // já que o input e o output de informacoes nao ocorre nessa camada do programa, mas sim na main - Pedro V
 }
+
+//Funcao que retorna a posicao das palavras no texto - Pedro Vargas
+//Essa funcao retorna um ponteiro pra int como array, que tem sempre um numero par de elementos
+//O primeiro do par representa a linha e o segundo a coluna da ocorrencia da palavra
+int *buscaPalavra(struct descritor *desc, char *palavra)
+{
+    struct noLinha *aux = malloc(sizeof(struct noLinha));
+    struct noPalavra *aux2 = malloc(sizeof(struct noPalavra));
+    int *ocorrencias = malloc(2*sizeof(int));
+    int ocSize = 2;
+    int ocorreu = FALSE;
+    if (aux == NULL || aux2 == NULL)
+        return NULL;
+    aux = desc->primeiraLinha;
+
+    while (aux != NULL)
+    {
+        aux2 = aux->primeiraPalavra;
+        while (aux2->palavra != NULL)
+        {
+            if (strcmp(palavra, aux2->palavra) == 0)
+            {
+                ocorreu = TRUE;
+                ocorrencias[ocSize-2] = aux->lin;
+                ocorrencias[ocSize-1] = aux2->col;
+                ocSize += 2;
+                ocorrencias = realloc(ocorrencias, ocSize*sizeof(int));
+            }
+            aux2 = aux2->proxPal;
+        }
+        aux = aux->proxLin;
+    }
+    if(!ocorreu)
+        return NULL; //Retorna NULL se a palavra nao ocorreu at all
+    return ocorrencias;
+}
