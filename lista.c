@@ -253,7 +253,7 @@ int removePalavra(struct descritor *desc, char *palavra)
                 else
                 {
                     aux->primeiraPalavra = aux2->proxPal;
-                    aux2->proxPal->antPal == NULL;
+                    aux2->proxPal->antPal = NULL;
                 }
                 if(aux2->proxPal != NULL)
                 {
@@ -294,7 +294,7 @@ int removePalavraPos(struct descritor *desc, int lin, int col)
                 else
                 {
                     aux->primeiraPalavra = aux2->proxPal;
-                    aux2->proxPal->antPal == NULL;
+                    aux2->proxPal->antPal = NULL;
                 }
                 if(aux2->proxPal != NULL)
                 {
