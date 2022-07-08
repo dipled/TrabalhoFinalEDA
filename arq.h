@@ -34,3 +34,4 @@ struct descritor
 struct descritor * cria();
 int importaTexto(struct descritor *desc, FILE *fp);
 int exibeTexto(struct descritor *desc);
+int insercao(struct descritor *desc, char *palavra, int linha, int coluna)
