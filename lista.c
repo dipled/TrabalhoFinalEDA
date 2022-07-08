@@ -178,11 +178,11 @@ int numTotalCertaPalavra(struct descritor *desc, char *palavra) // Modifiquei pa
                        // já que o input e o output de informacoes nao ocorre nessa camada do programa, mas sim na main - Pedro V
 }
 
-//Funcao que retorna a posicao das palavras no texto - Pedro Vargas
-//Essa funcao retorna um ponteiro pra int como array, que tem sempre um numero impar de elementos
-//O primeiro elemento representa a quantidade de ocorrencias de uma determinada palavra
-//Depois do primeiro elemento, ha sempre uma sequencia de pares de numeros
-//O primeiro do par representa a linha e o segundo a coluna da ocorrencia da palavra
+// Funcao que retorna a posicao das palavras no texto - Pedro Vargas
+// Essa funcao retorna um ponteiro pra int como array, que tem sempre um numero impar de elementos
+// O primeiro elemento representa a quantidade de ocorrencias de uma determinada palavra
+// Depois do primeiro elemento, ha sempre uma sequencia de pares de numeros
+// O primeiro do par representa a linha e o segundo a coluna da ocorrencia da palavra
 int *buscaPalavra(struct descritor *desc, char *palavra)
 {
     struct noLinha *aux = malloc(sizeof(struct noLinha));
@@ -190,7 +190,6 @@ int *buscaPalavra(struct descritor *desc, char *palavra)
     int *ocorrencias = malloc(sizeof(int));
     int ocSize = 3;
     int total = 0;
-    int ocorreu = FALSE;
     if (aux == NULL || aux2 == NULL)
         return NULL;
     aux = desc->primeiraLinha;
@@ -203,18 +202,17 @@ int *buscaPalavra(struct descritor *desc, char *palavra)
             if (strcmp(palavra, aux2->palavra) == 0)
             {
                 total += 1;
-                ocorreu = TRUE;
-                ocorrencias = realloc(ocorrencias, (ocSize-1)*sizeof(int));
-                ocorrencias[ocSize-2] = aux->lin;
-                ocorrencias[ocSize-1] = aux2->col;
+                ocorrencias = realloc(ocorrencias, (ocSize - 1) * sizeof(int));
+                ocorrencias[ocSize - 2] = aux->lin;
+                ocorrencias[ocSize - 1] = aux2->col;
                 ocSize += 2;
             }
             aux2 = aux2->proxPal;
         }
         aux = aux->proxLin;
     }
-    if(!ocorreu)
-        return NULL; //Retorna NULL se a palavra nao ocorreu at all
-        ocorrencias[0] = total;
+    ocorrencias[0] = total; // Primeiro elemento do array sempre indica o total de ocorrencias da palavra
+    if (ocorrencias[0] == 0)
+        return NULL; // Retorna NULL se a palavra nao ocorreu at all
     return ocorrencias;
 }
