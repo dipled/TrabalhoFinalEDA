@@ -88,8 +88,8 @@ int importaTexto(struct descritor *desc, FILE *fp)
                 quantEspacos = 0;
                 acabouPal = FALSE;
                 i2 = 0;
-                memset(palavra,0,40*sizeof(char)); // Reset da palavra lida
-                                                   // caractere da proxima palavra - Pedro Vargas
+                memset(palavra, 0, 40 * sizeof(char)); // Reset da palavra lida
+                                                       // caractere da proxima palavra - Pedro V
                 numPalavras += 1;
                 if (acabouLin)
                 {
@@ -113,6 +113,7 @@ int importaTexto(struct descritor *desc, FILE *fp)
         temp->numPalavras = numPalavras;
     }
     desc->numLinhas = numLinha;
+    return 0;
 }
 // Funcao que exibe o texto a partir da lista - Gustavo Felipe
 int exibeTexto(struct descritor *desc)
@@ -146,4 +147,72 @@ int exibeTexto(struct descritor *desc)
             aux = aux->proxLin;
         }
     }
+    return 0;
+}
+
+// Funcao que exibe do número total de ocorrências de uma palavra - Gustavo Konescki Fuhr
+int numTotalCertaPalavra(struct descritor *desc, char *palavra) // Modifiquei palavra para um ponteiro para manter o encapsulamento - Pedro V
+{
+    // Mudei a declaracao dos ponteiros para fora do while porque eles iriam ficar mallocando desnecessariamente - Pedro V
+    struct noLinha *aux = malloc(sizeof(struct noLinha));
+    struct noPalavra *aux2 = malloc(sizeof(struct noPalavra));
+    int totPalavra = 0;
+    if (aux == NULL || aux2 == NULL)
+        return -1;
+    aux = desc->primeiraLinha;
+
+    while (aux != NULL)
+    {
+        aux2 = aux->primeiraPalavra;
+        while (aux2->palavra != NULL)
+        {
+            if (strcmp(palavra, aux2->palavra) == 0)
+            {
+                totPalavra++;
+            }
+            aux2 = aux2->proxPal;
+        }
+        aux = aux->proxLin;
+    }
+    return totPalavra; // Mudei o printf() que tinha aqui para apenas retornar a quantidade de ocorrencias de uma palavra
+                       // já que o input e o output de informacoes nao ocorre nessa camada do programa, mas sim na main - Pedro V
+}
+
+// Funcao que retorna a posicao das palavras no texto - Pedro Vargas
+// Essa funcao retorna um ponteiro pra int como array, que tem sempre um numero impar de elementos
+// O primeiro elemento representa a quantidade de ocorrencias de uma determinada palavra
+// Depois do primeiro elemento, ha sempre uma sequencia de pares de numeros
+// O primeiro do par representa a linha e o segundo a coluna da ocorrencia da palavra
+int *buscaPalavra(struct descritor *desc, char *palavra)
+{
+    struct noLinha *aux = malloc(sizeof(struct noLinha));
+    struct noPalavra *aux2 = malloc(sizeof(struct noPalavra));
+    int *ocorrencias = malloc(sizeof(int));
+    int ocSize = 3;
+    int total = 0;
+    if (aux == NULL || aux2 == NULL)
+        return NULL;
+    aux = desc->primeiraLinha;
+
+    while (aux != NULL)
+    {
+        aux2 = aux->primeiraPalavra;
+        while (aux2->palavra != NULL)
+        {
+            if (strcmp(palavra, aux2->palavra) == 0)
+            {
+                total += 1;
+                ocorrencias = realloc(ocorrencias, (ocSize - 1) * sizeof(int));
+                ocorrencias[ocSize - 2] = aux->lin;
+                ocorrencias[ocSize - 1] = aux2->col;
+                ocSize += 2;
+            }
+            aux2 = aux2->proxPal;
+        }
+        aux = aux->proxLin;
+    }
+    ocorrencias[0] = total; // Primeiro elemento do array sempre indica o total de ocorrencias da palavra
+    if (ocorrencias[0] == 0)
+        return NULL; // Retorna NULL se a palavra nao ocorreu at all
+    return ocorrencias;
 }

@@ -34,3 +34,5 @@ struct descritor
 struct descritor * cria();
 int importaTexto(struct descritor *desc, FILE *fp);
 int exibeTexto(struct descritor *desc);
+int numTotalCertaPalavra(struct descritor *desc, char *palavra);
+int *buscaPalavra(struct descritor *desc, char *palavra);
