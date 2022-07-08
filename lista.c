@@ -4,6 +4,10 @@
 struct descritor *cria()
 {
     struct descritor *desc = malloc(sizeof(struct descritor));
+    if (desc == NULL)
+    {
+        return NULL;
+    }
     desc->numLinhas = 0;
     desc->primeiraLinha = NULL;
     return desc;
@@ -84,8 +88,8 @@ int importaTexto(struct descritor *desc, FILE *fp)
                 quantEspacos = 0;
                 acabouPal = FALSE;
                 i2 = 0;
-                memset(palavra,0,40*sizeof(char)); // Reset da palavra lida
-                                                   // caractere da proxima palavra - Pedro Vargas
+                memset(palavra, 0, 40 * sizeof(char)); // Reset da palavra lida
+                                                       // caractere da proxima palavra - Pedro Vargas
                 numPalavras += 1;
                 if (acabouLin)
                 {
