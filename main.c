@@ -4,6 +4,10 @@
 #include "arq.h"
 int main(){
     struct descritor *desc = cria();
+    if(desc == NULL)
+    {
+        printf("Erro ao crirar descritor\n");
+    }
     FILE *fp;
     fp = fopen("teste.txt","r");
     if(fp == NULL)

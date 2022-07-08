@@ -4,10 +4,6 @@
 struct descritor *cria()
 {
     struct descritor *desc = malloc(sizeof(struct descritor));
-    if (desc == NULL)
-    {
-        return NULL;
-    }
     desc->numLinhas = 0;
     desc->primeiraLinha = NULL;
     return desc;
