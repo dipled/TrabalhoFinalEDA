@@ -13,7 +13,8 @@ int main(){
     }
     importaTexto(desc, fp);
     exibeTexto(desc);
-    
+    printf("Numero de vezes que a palavra 'teste' aparece: %d\n", numTotalCertaPalavra(desc,"teste"));
+    printf("Numero de palavrsa: %d\n",numTotalPalavra(desc));
 
     return 0;
 }
