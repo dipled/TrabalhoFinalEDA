@@ -231,3 +231,21 @@ int numTotalPalavra(struct descritor *desc)
     }
     return totPalavra;
 }
+
+
+int edicaoPalavra(struct descritor *desc, int lin, int col, FILE *fp)
+{
+    struct noLinha *aux = malloc(sizeof(struct noLinha));
+    struct noPalavra *aux2 = malloc(sizeof(struct noPalavra));
+    if (aux == NULL && aux2 == NULL)
+        return -1;
+    aux = desc->primeiraLinha;
+    for (int i = 0; i < lin; i++)
+        aux = aux->proxLin;
+    aux2 = aux->primeiraPalavra;
+    while (aux2->col != col)
+        aux2 = aux2->proxPal;
+
+    {
+    }
+}
