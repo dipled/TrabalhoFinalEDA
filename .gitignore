@@ -1,7 +1,4 @@
-.vscode/launch.json
-.vscode/settings.json
+.vscode/
 a.exe
 a.out
-.vscode/c_cpp_properties.json
-.vscode/tasks.json
 main
