@@ -17,16 +17,64 @@ int main()
         return -1;
     }
     importaTexto(desc, fp);
-    exibeTexto(desc);
-    printf("Numero total da palavra Teste: %d\n",numTotalCertaPalavra(desc, "Teste"));
-    int *ocorrencias = buscaPalavra(desc, "teste");
-    if(ocorrencias != NULL){
-        for(int i = 0; i < ocorrencias[0]*2; i += 2){
-            printf("(%d,%d)\n",ocorrencias[i+1],ocorrencias[i+2]);
+    int escolha = -1;
+    char *palavra = calloc(40, sizeof(char));
+    while (1)
+    {
+        printf("Digite 1 para exibir o texto\nDigite 2 para buscar uma palavra do texto\n");
+        printf("Digite 3 para contar uma determinada palavra\nDigite 4 para contar o total de palavras\n");
+        printf("Digite 5 para remover uma palavra\n");
+        printf("Digite 0 para sair do programa\n");
+        scanf("%d", &escolha);
+        switch ((escolha))
+        {
+        case 1:
+            exibeTexto(desc);
+            break;
+        case 2:
+            printf("Digite uma palavra para ser buscada\n");
+            scanf(" %[^\n]s", palavra);
+            int *ocorrencia = buscaPalavra(desc, palavra);
+            if (ocorrencia != NULL)
+            {
+                if (ocorrencia[0] == 0)
+                    printf("Palavra nao encontrada\n");
+                else
+                {
+                    printf("Ocorrencias:\n");
+                    for (int i = 0; i < ocorrencia[0] * 2; i += 2)
+                    {
+                        printf("(%d,%d)", ocorrencia[i + 1], ocorrencia[i + 2]);
+                    }
+                }
+                printf("\n");
+            }
+            break;
+        case 3:
+            printf("Digite uma palavra para ser contada\n");
+            scanf(" %[^\n]s", palavra);
+            printf("A palavra %s ocorre %d vezes\n", palavra, numTotalCertaPalavra(desc, palavra));
+            break;
+        case 4:
+            printf("Total de palavras:%d\n", numTotalPalavra(desc));
+            break;
+        case 5:
+            printf("Digite a palavra a ser removida\n");
+            scanf(" %[^\n]s", palavra);
+            if (removePalavra(desc, palavra))
+            {
+                printf("Palavra removida com sucesso\n");
+            }
+            else
+            {
+                printf("Erro ao remover a palavra\n");
+            }
+            break;
+        case 0:
+            return 0;
+        default:
+            break;
         }
+        memset(palavra, 0, 40 * sizeof(char));
     }
-    printf("Numero de palavras: %d\n",numTotalPalavra(desc));
-    
-
-    return 0;
 }

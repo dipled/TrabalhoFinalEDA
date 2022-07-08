@@ -210,11 +210,7 @@ int *buscaPalavra(struct descritor *desc, char *palavra)
         }
         aux = aux->proxLin;
     }
-    free(aux);
-    free(aux2);
-    ocorrencias[0] = total; // Primeiro elemento do array sempre indica o total de ocorrencias da palavra
-    if (ocorrencias[0] == 0)
-        return NULL; // Retorna NULL se a palavra nao ocorreu at all
+    ocorrencias[0] = total;
     return ocorrencias;
 }
 int numTotalPalavra(struct descritor *desc)
@@ -230,4 +226,45 @@ int numTotalPalavra(struct descritor *desc)
         aux = aux->proxLin;
     }
     return totPalavra;
+}
+//Funcao que remove uma determinada palavra do texto - Pedro Vargas
+int removePalavra(struct descritor *desc, char *palavra)
+{
+    struct noLinha *aux = malloc(sizeof(struct noLinha));
+    struct noPalavra *aux2 = malloc(sizeof(struct noPalavra));
+    int removeu = FALSE;
+
+    if (aux == NULL || aux2 == NULL)
+        return -1;
+    aux = desc->primeiraLinha;
+
+    while (aux != NULL)
+    {
+        aux2 = aux->primeiraPalavra;
+        while (aux2->palavra != NULL)
+        {
+            if (strcmp(palavra, aux2->palavra) == 0)
+            {
+                removeu = TRUE;
+                if (aux2->antPal != NULL)
+                {
+                    aux2->antPal->proxPal = aux2->proxPal;
+                }
+                else
+                {
+                    aux->primeiraPalavra = aux2->proxPal;
+                    aux2->proxPal->antPal == NULL;
+                }
+                if(aux2->proxPal != NULL)
+                {
+                    aux2->proxPal->antPal = aux2->antPal;
+                }
+                free(aux2);
+                aux->numPalavras -= 1;
+            }
+            aux2 = aux2->proxPal;
+        }
+        aux = aux->proxLin;
+    }
+    return removeu;
 }
