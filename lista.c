@@ -201,7 +201,7 @@ int *buscaPalavra(struct descritor *desc, char *palavra)
             if (strcmp(palavra, aux2->palavra) == 0)
             {
                 total += 1;
-                ocorrencias = realloc(ocorrencias, (ocSize - 1) * sizeof(int));
+                ocorrencias = realloc(ocorrencias, (ocSize) * sizeof(int));
                 ocorrencias[ocSize - 2] = aux->lin;
                 ocorrencias[ocSize - 1] = aux2->col;
                 ocSize += 2;
@@ -210,6 +210,8 @@ int *buscaPalavra(struct descritor *desc, char *palavra)
         }
         aux = aux->proxLin;
     }
+    free(aux);
+    free(aux2);
     ocorrencias[0] = total; // Primeiro elemento do array sempre indica o total de ocorrencias da palavra
     if (ocorrencias[0] == 0)
         return NULL; // Retorna NULL se a palavra nao ocorreu at all
