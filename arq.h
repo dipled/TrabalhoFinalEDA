@@ -38,5 +38,7 @@ int numTotalCertaPalavra(struct descritor *desc, char *palavra);
 int *buscaPalavra(struct descritor *desc, char *palavra);
 int numTotalPalavra(struct descritor *desc);
 int edicaoPalavra(struct descritor *desc, int lin, int col, char *pal);
+int removePalavra(struct descritor *desc, char *palavra);
 int removePalavraPos(struct descritor *desc, int lin, int col);
 int **subString(struct descritor *desc, char *pal, int* tam);
+
