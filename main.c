@@ -136,7 +136,7 @@ void edita(struct descritor *desc){
     scanf("%d %d", &lin, &col);
     printf("Digite a palavra a ser editada\n");
     scanf(" %[^\n]s", palavra);
-    if (edicaoPalavra(desc, lin, col, palavra))
+    if (edicaoPalavra(desc, lin, col, strtok(palavra, " .-&/")))
         printf("Palavra editada com sucesso\n");
     else
         printf("Palavra nao encontrada\n");
