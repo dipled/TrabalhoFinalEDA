@@ -217,6 +217,8 @@ int *buscaPalavra(struct descritor *desc, char *palavra)
         return NULL; // Retorna NULL se a palavra nao ocorreu at all
     return ocorrencias;
 }
+
+//funcao que retorna o numero total de palavras. Gustavo Felipe
 int numTotalPalavra(struct descritor *desc)
 {
     struct noLinha *aux = malloc(sizeof(struct noLinha));
@@ -231,7 +233,7 @@ int numTotalPalavra(struct descritor *desc)
     }
     return totPalavra;
 }
-
+//funcao que dada uma posicao de uma palavra existente e uma nova palavra, troca a antiga pela nova. Gustavo Felipe
 int edicaoPalavra(struct descritor *desc, int lin, int col, char *pal)
 {
     struct noLinha *aux = malloc(sizeof(struct noLinha));
@@ -306,7 +308,7 @@ int removePalavraPos(struct descritor *desc, int lin, int col)
     }
     return removeu;
 }
-
+//funcao que dada uma string, retorna as ocorrencias das substrings. Gustavo Felipe
 int **subString(struct descritor *desc, char *pal, int *tam)
 {
     int **ocor;
@@ -327,9 +329,3 @@ int **subString(struct descritor *desc, char *pal, int *tam)
     *tam = total;
     return ocor;
 }
-// strtok(pal, ".*-/ ")
-/* int *quantPalavras = malloc(sizeof(int));
- int *retorno = malloc(sizeof(int));
- int quantSize = 3;
-
- }*/

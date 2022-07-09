@@ -17,29 +17,40 @@ int main()
         return -1;
     }
     importaTexto(desc, fp);
-    // exibeTexto(desc);
-    //  printf("Numero total da palavra Teste: %d\n",numTotalCertaPalavra(desc, "Teste"));
-    /*  int *ocorrencias = buscaPalavra(desc, "Teste");
+    exibeTexto(desc);
+    printf("\nE) Total palavra especifica\n");
+    printf("Numero total da palavra Teste: %d\n",numTotalCertaPalavra(desc, "Teste"));
+    int *ocorrencias = buscaPalavra(desc, "Teste");
       if (ocorrencias != NULL)
       {
           for (int i = 0; i < ocorrencias[0] * 2; i += 2)
           {
               printf("(%d,%d)\n", ocorrencias[i + 1], ocorrencias[i + 2]);
           }
-      }*/
-    // printf("Numero de palavras: %d\n",numTotalPalavra(desc));*/
-    // edicaoPalavra(desc, 2, 7, "justin bieber");
-    // removePalavraPos(desc,1,1);
-    // exibeTexto(desc);
+      }
+    printf("\n--------");
+    printf("\nF) Numero total\n");
+    printf("Numero de palavras: %d\n",numTotalPalavra(desc));
+    printf("\n--------");
+    printf("\nG) Edicao\n");
+    edicaoPalavra(desc, 2, 7, "justin bieber");
+    exibeTexto(desc);
+
+    printf("\n--------");
+    printf("\nD) Remove posicao\n");
+    removePalavraPos(desc,1,1);
+    exibeTexto(desc);
+
+    printf("\n--------");
+    printf("\nI) Substrings\n");
+
     char *teste;
     char *str;
     int **sub;
     teste = malloc(sizeof(char) * 100);
-    strcpy(teste, "teste a b c divinas bunda a b c d e f g h a tese aboboras ");
+    strcpy(teste, "teste a c divinas ");
     int tam = 0;
-    printf("%s", teste);
     sub = subString(desc, teste, &tam);
-    printf("%s", teste);
     str = strtok(teste, " .*-/");
 
     for (int i = 0; i < tam; i++)
