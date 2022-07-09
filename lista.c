@@ -306,3 +306,28 @@ int removePalavraPos(struct descritor *desc, int lin, int col)
     }
     return removeu;
 }
+
+int **subString(struct descritor *desc, char *pal, int *tam)
+{
+    int **ocor;
+    int total;
+    total = 0;
+    char *sub = strtok(pal, ".*-/ ");
+
+    while (sub != NULL)
+    {
+        ocor = realloc(ocor, sizeof(ocor) * (total + 2));
+        ocor[total] = buscaPalavra(desc, sub);
+        total++;
+        sub = strtok(NULL, ".*-/ ");
+
+    }
+    *tam = total;
+    return ocor;
+}
+// strtok(pal, ".*-/ ")
+/* int *quantPalavras = malloc(sizeof(int));
+ int *retorno = malloc(sizeof(int));
+ int quantSize = 3;
+
+ }*/
