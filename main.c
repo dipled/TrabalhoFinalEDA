@@ -36,17 +36,15 @@ int main()
     int **sub;
     teste = malloc(sizeof(char) * 100);
     strcpy(teste, "teste a b c divinas bunda a b c d e f g h a tese aboboras ");
-    int tam=0;
+    int tam = 0;
+    printf("%s", teste);
     sub = subString(desc, teste, &tam);
+    printf("%s", teste);
     str = strtok(teste, " .*-/");
-    while(str!=NULL){
-        printf("%s", str);
-        str = strtok(NULL, " .*-/");
-    }
-/*
+
     for (int i = 0; i < tam; i++)
     {
-        printf("ocorrencias da substring '%s': \n", str);
+        printf("\nOcorrencias da substring '%s': \n", str);
         if (sub[i] != NULL)
         {
 
@@ -56,10 +54,10 @@ int main()
             }
         }
         else
-            printf("nao ha ocorrencias\n")
-        
+            printf("nao ha ocorrencias\n");
+
         str = strtok(NULL, " ./-");
     }
-*/
+
     return 0;
 }

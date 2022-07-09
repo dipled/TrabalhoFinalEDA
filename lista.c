@@ -310,9 +310,11 @@ int removePalavraPos(struct descritor *desc, int lin, int col)
 int **subString(struct descritor *desc, char *pal, int *tam)
 {
     int **ocor;
+    char *aux = malloc(100);
+    strcpy(aux,pal);
     int total;
     total = 0;
-    char *sub = strtok(pal, ".*-/ ");
+    char *sub = strtok(aux, ".*-/ ");
 
     while (sub != NULL)
     {
