@@ -31,7 +31,14 @@ struct descritor
 
 // Definicao das funcoes
 
-struct descritor * cria();
+struct descritor *cria();
 int importaTexto(struct descritor *desc, FILE *fp);
 int exibeTexto(struct descritor *desc);
-int insercao(struct descritor *desc, char *palavra, int linha, int coluna)
+int numTotalCertaPalavra(struct descritor *desc, char *palavra);
+int *buscaPalavra(struct descritor *desc, char *palavra);
+int numTotalPalavra(struct descritor *desc);
+int removePalavra(struct descritor *desc, char *palavra);
+int removePalavraPos(struct descritor *desc, int lin, int col);
+int insercaoPorPos(struct descritor *desc, char *palavra, int linha, int coluna);
+int insercao(struct descritor *desc, char *palavra);
+int atualizaArquivo(struct descritor *desc, FILE *fp);
