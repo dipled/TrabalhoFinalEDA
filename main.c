@@ -32,7 +32,7 @@ int main()
         printf("Digite 1 para exibir o texto\nDigite 2 para buscar uma palavra do texto\n");
         printf("Digite 3 para contar uma determinada palavra\nDigite 4 para contar o total de palavras\n");
         printf("Digite 5 para remover uma palavra\nDigite 6 para remover uma palavra de uma linha e coluna\n");
-        printf("Digite 7 para editar uma palavra\nDigite 9 para mostrar as substrings de uma string\n");
+        printf("Digite 7 para editar uma palavra\nDigite 9 para pesquisar uma palavra contendo um termo\n");
         printf("Digite 0 para sair do programa\n");
         scanf("%d", &escolha);
         switch ((escolha))
