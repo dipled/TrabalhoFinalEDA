@@ -374,8 +374,8 @@ char **subString(struct descritor *desc, char *pal)
     }
     if (quant == 1)
         return NULL;
-    retorno = realloc(retorno, (quant+1)*sizeof(char *));
-    retorno[quant-2] = NULL;
+    retorno = realloc(retorno, (quant)*sizeof(char *));
+    retorno[quant-1] = NULL;
     return retorno;
 }
 
