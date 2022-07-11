@@ -13,6 +13,8 @@ void removePos(struct descritor *desc);
 void conta(struct descritor *desc);
 void busca(struct descritor *desc);
 void contaTotal(struct descritor *desc);
+void atualizaArq(struct descritor *desc, FILE *fp);
+void insercaoPal(struct descritor *desc);
 void subStr(struct descritor *desc);
 void edita(struct descritor *desc);
 
@@ -39,6 +41,7 @@ int main()
             printf("Digite 1 para continuar ou 0 para parar\n");
             scanf("%d",&escolha);
             if(escolha == 0){
+                atualizaArq(desc,fp);
                 if(desc!=NULL)
                     free(desc);
                 return 0;
@@ -73,6 +76,9 @@ int main()
             break;
         case 7:
             edita(desc);
+            break;
+        case 8:
+            insercaoPal(desc);
             break;
         case 9:
             subStr(desc);
@@ -195,4 +201,21 @@ void subStr(struct descritor *desc)
         }
         i += 1;
     }
+}
+void insercaoPal(struct descritor *desc)
+{
+    char *palavra = calloc(40, sizeof(char));
+    printf("Digite a palavra a ser inserida\n");
+    scanf(" %[^\n]s", palavra);
+    if (insercao(desc, palavra))
+        printf("Palavra inserida com sucesso\n");
+    else
+        printf("Erro ao inserir a palavra\n");
+}
+void atualizaArq(struct descritor *desc, FILE *fp)
+{
+    if (atualizaArquivo(desc, fp))
+        printf("Arquivo salvo com sucesso\n");
+    else
+        printf("Erro ao salvar o arquivo\n");    
 }

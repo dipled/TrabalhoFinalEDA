@@ -444,7 +444,6 @@ int insercao(struct descritor *desc, char *palavra)
     aux2->proxPal = temp;
     temp->proxPal = NULL;
     temp->antPal = aux2;
-    free(temp);
     inseriu = TRUE;
     return inseriu;
 }
