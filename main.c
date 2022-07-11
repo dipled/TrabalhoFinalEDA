@@ -45,12 +45,11 @@ int main()
             }
         }
             
-        system(CLEAR);
+        fprintf(stderr,"\033[2J\033[H");
         printf("Digite 1 para exibir o texto\nDigite 2 para buscar uma palavra do texto\n");
         printf("Digite 3 para contar uma determinada palavra\nDigite 4 para contar o total de palavras\n");
         printf("Digite 5 para remover uma palavra\nDigite 6 para remover uma palavra de uma linha e coluna\n");
         printf("Digite 7 para editar uma palavra\nDigite 8 para inserir uma palavra\nDigite 9 para pesquisar uma palavra contendo um termo\n");
-        printf("Digite 0 para sair do programa\n");
         scanf("%d", &escolha);
         switch ((escolha))
         {
@@ -86,18 +85,18 @@ int main()
 
 void exibe(struct descritor *desc)
 {
-    system(CLEAR);
+    fprintf(stderr,"\033[2J\033[H");
     exibeTexto(desc);
     printf("\n");
 }
 void contaTotal(struct descritor *desc)
 {
-    system(CLEAR);
+    fprintf(stderr,"\033[2J\033[H");
     printf("Total de palavras:%d\n", numTotalPalavra(desc));
 }
 void conta(struct descritor *desc)
 {
-    system(CLEAR);
+    fprintf(stderr,"\033[2J\033[H");
     char *palavra = calloc(40, sizeof(char));
     printf("Digite uma palavra para ser contada\n");
     scanf(" %[^\n]s", palavra);
@@ -105,7 +104,7 @@ void conta(struct descritor *desc)
 }
 void busca(struct descritor *desc)
 {
-    system(CLEAR);
+    fprintf(stderr,"\033[2J\033[H");
     char *palavra = calloc(40, sizeof(char));
     printf("Digite uma palavra para ser buscada\n");
     scanf(" %[^\n]s", palavra);
@@ -127,7 +126,7 @@ void busca(struct descritor *desc)
 }
 void removePal(struct descritor *desc)
 {
-    system(CLEAR);
+    fprintf(stderr,"\033[2J\033[H");
     char *palavra = calloc(40, sizeof(char));
     printf("Digite a palavra a ser removida\n");
     scanf(" %[^\n]s", palavra);
@@ -142,7 +141,7 @@ void removePal(struct descritor *desc)
 }
 void removePos(struct descritor *desc)
 {
-    system(CLEAR);
+    fprintf(stderr,"\033[2J\033[H");
     int lin, col;
     printf("Digite a linha e a coluna da palavra a ser removida\n");
     scanf("%d %d", &lin, &col);
@@ -153,7 +152,7 @@ void removePos(struct descritor *desc)
 }
 void edita(struct descritor *desc)
 {
-    system(CLEAR);
+    fprintf(stderr,"\033[2J\033[H");
     int lin, col;
     char *palavra = calloc(40, sizeof(char));
     printf("Digite a linha e a coluna da palavra a ser editada\n");
@@ -168,7 +167,7 @@ void edita(struct descritor *desc)
 
 void subStr(struct descritor *desc)
 {
-    system(CLEAR);
+    fprintf(stderr,"\033[2J\033[H");
 
     char *palavra;
     palavra = calloc(40, sizeof(char));
