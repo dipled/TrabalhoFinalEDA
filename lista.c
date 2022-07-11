@@ -213,6 +213,8 @@ int *buscaPalavra(struct descritor *desc, char *palavra)
     ocorrencias[0] = total;
     return ocorrencias;
 }
+
+// funcao que retorna o numero total de palavras. Gustavo Felipe
 int numTotalPalavra(struct descritor *desc)
 {
     struct noLinha *aux = malloc(sizeof(struct noLinha));
@@ -227,7 +229,7 @@ int numTotalPalavra(struct descritor *desc)
     }
     return totPalavra;
 }
-//Funcao que remove uma determinada palavra do texto - Pedro Vargas
+// Funcao que remove uma determinada palavra do texto - Pedro Vargas
 int removePalavra(struct descritor *desc, char *palavra)
 {
     struct noLinha *aux = malloc(sizeof(struct noLinha));
@@ -255,7 +257,7 @@ int removePalavra(struct descritor *desc, char *palavra)
                     aux->primeiraPalavra = aux2->proxPal;
                     aux2->proxPal->antPal = NULL;
                 }
-                if(aux2->proxPal != NULL)
+                if (aux2->proxPal != NULL)
                 {
                     aux2->proxPal->antPal = aux2->antPal;
                 }
@@ -268,7 +270,7 @@ int removePalavra(struct descritor *desc, char *palavra)
     }
     return removeu;
 }
-//Funcao que remove uma determinada palavra do texto - Pedro Vargas
+// Funcao que remove uma determinada palavra do texto - Pedro Vargas
 int removePalavraPos(struct descritor *desc, int lin, int col)
 {
     struct noLinha *aux = malloc(sizeof(struct noLinha));
@@ -296,7 +298,7 @@ int removePalavraPos(struct descritor *desc, int lin, int col)
                     aux->primeiraPalavra = aux2->proxPal;
                     aux2->proxPal->antPal = NULL;
                 }
-                if(aux2->proxPal != NULL)
+                if (aux2->proxPal != NULL)
                 {
                     aux2->proxPal->antPal = aux2->antPal;
                 }
@@ -308,4 +310,105 @@ int removePalavraPos(struct descritor *desc, int lin, int col)
         aux = aux->proxLin;
     }
     return removeu;
+}
+// funcao que dada uma string, retorna as ocorrencias das substrings. Gustavo Felipe
+char **subString(struct descritor *desc, char *pal)
+{
+
+    struct noLinha *aux = malloc(sizeof(struct noLinha));
+    struct noPalavra *aux2 = malloc(sizeof(struct noPalavra));
+    char **retorno = malloc(sizeof(char *));
+    char **repetidas = malloc(sizeof(char *));
+    int quant = 1;
+    int quantRepetidas = 1;
+    int repetida = FALSE;
+    int ehSub = FALSE;
+    if (aux == NULL || aux2 == NULL || retorno == NULL)
+        return NULL;
+    aux = desc->primeiraLinha;
+    while (aux != NULL)
+    {
+        aux2 = aux->primeiraPalavra;
+        while (aux2->palavra != NULL)
+        {
+            for (int i = 0; aux2->palavra[i] != '\0'; i += 1)
+            {
+                ehSub = FALSE;
+                for (int j = 0; pal[j] != '\0'; j++)
+                {
+                    if (aux2->palavra[i + j] != pal[j])
+                    {
+                        ehSub = FALSE;
+                        break;
+                    }
+                    ehSub = TRUE;
+                }
+                if (ehSub)
+                {
+                    for (int x = 0; x < quantRepetidas-1; x += 1)
+                    {
+                        if (strcmp(aux2->palavra, repetidas[x]) == 0)
+                        {
+                            repetida = TRUE;
+                            break;
+                        }
+                    }
+                    if (!repetida)
+                    {
+                        quant += 1;
+                        retorno = realloc(retorno, sizeof(char *));
+                        retorno[quant - 2] = malloc(sizeof(aux2->palavra));
+                        strcpy(retorno[quant - 2], aux2->palavra);
+                    }
+                    quantRepetidas += 1;
+                    repetidas = realloc(repetidas, sizeof(char *));
+                    repetidas[quantRepetidas - 2] = malloc(sizeof(aux2->palavra));
+                    strcpy(repetidas[quant - 2], aux2->palavra);
+                    repetida = FALSE;
+                    break;
+                }
+            }
+            aux2 = aux2->proxPal;
+        }
+        aux = aux->proxLin;
+    }
+    if (quant == 1)
+        return NULL;
+    return retorno;
+}
+
+// funcao que dada uma posicao de uma palavra existente e uma nova palavra, troca a antiga pela nova. Gustavo Felipe
+int edicaoPalavra(struct descritor *desc, int lin, int col, char *pal)
+{
+    struct noLinha *aux = malloc(sizeof(struct noLinha));
+    struct noPalavra *aux2 = malloc(sizeof(struct noPalavra));
+    int espaco = 0;
+    int editou = FALSE;
+    if (aux == NULL || aux2 == NULL)
+        return -1;
+    aux = desc->primeiraLinha;
+    while (aux != NULL)
+    {
+        aux2 = aux->primeiraPalavra;
+        while (aux2->palavra != NULL)
+        {
+            if (aux->lin == lin && aux2->col == col)
+            {
+                editou = TRUE;
+                espaco = strlen(pal) - strlen(aux2->palavra);
+                strcpy(aux2->palavra, pal);
+                if (aux2->proxPal != NULL)
+                {
+                    while (aux2->proxPal != NULL)
+                    {
+                        aux2->proxPal->col = aux2->proxPal->col + espaco;
+                        aux2 = aux2->proxPal;
+                    }
+                }
+            }
+            aux2 = aux2->proxPal;
+        }
+        aux = aux->proxLin;
+    }
+    return editou;
 }

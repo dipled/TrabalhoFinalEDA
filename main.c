@@ -8,6 +8,8 @@ void removePos(struct descritor *desc);
 void conta(struct descritor *desc);
 void busca(struct descritor *desc);
 void contaTotal(struct descritor *desc);
+void subStr(struct descritor *desc);
+void edita(struct descritor *desc);
 
 int main()
 {
@@ -30,6 +32,7 @@ int main()
         printf("Digite 1 para exibir o texto\nDigite 2 para buscar uma palavra do texto\n");
         printf("Digite 3 para contar uma determinada palavra\nDigite 4 para contar o total de palavras\n");
         printf("Digite 5 para remover uma palavra\nDigite 6 para remover uma palavra de uma linha e coluna\n");
+        printf("Digite 7 para editar uma palavra\nDigite 9 para mostrar as substrings de uma string\n");
         printf("Digite 0 para sair do programa\n");
         scanf("%d", &escolha);
         switch ((escolha))
@@ -51,6 +54,12 @@ int main()
             break;
         case 6:
             removePos(desc);
+            break;
+        case 7:
+            edita(desc);
+            break;
+        case 9:
+            subStr(desc);
             break;
         case 0:
             return 0;
@@ -114,9 +123,50 @@ void removePos(struct descritor *desc)
 {
     int lin, col;
     printf("Digite a linha e a coluna da palavra a ser removida\n");
-    scanf("%d %d",&lin,&col);
-    if(removePalavraPos(desc, lin, col))
+    scanf("%d %d", &lin, &col);
+    if (removePalavraPos(desc, lin, col))
         printf("Palavra removida com sucesso\n");
     else
         printf("Palavra nao encontrada\n");
+}
+void edita(struct descritor *desc)
+{
+    int lin, col;
+    char *palavra = calloc(40, sizeof(char));
+    printf("Digite a linha e a coluna da palavra a ser editada\n");
+    scanf("%d %d", &lin, &col);
+    printf("Digite a palavra a ser editada\n");
+    scanf(" %[^\n]s", palavra);
+    if (edicaoPalavra(desc, lin, col, strtok(palavra, " .-&/")))
+        printf("Palavra editada com sucesso\n");
+    else
+        printf("Palavra nao encontrada\n");
+}
+
+void subStr(struct descritor *desc)
+{
+
+    char *palavra;
+    palavra = calloc(40, sizeof(char));
+    printf("Digite um termo para ser buscada\n");
+    scanf(" %[^\n]s", palavra);
+    char **resultado = subString(desc, palavra);
+    if(resultado == NULL)
+    {
+        printf("Nenhuma palavra com termo encontrada!");
+    }
+    for (int i = 0; i < sizeof(resultado) / sizeof(char *); i += 1)
+    {
+        printf("Palavra que contem termo encontrada! %s\n", resultado[i]);
+        int *ocorrencia = buscaPalavra(desc, resultado[i]);
+        if (ocorrencia != NULL)
+        {
+            printf("Ocorrencias:\n");
+            for (int i = 0; i < ocorrencia[0] * 2; i += 2)
+            {
+                printf("(%d,%d)", ocorrencia[i + 1], ocorrencia[i + 2]);
+            }
+            printf("\n");
+        }
+    }
 }
