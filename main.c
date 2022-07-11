@@ -35,7 +35,16 @@ int main()
     while (1)
     {
         if (escolha != -234)
-            system("pause");
+        {
+            printf("Digite 1 para continuar ou 0 para parar\n");
+            scanf("%d",&escolha);
+            if(escolha == 0){
+                if(desc!=NULL)
+                    free(desc);
+                return 0;
+            }
+        }
+            
         system(CLEAR);
         printf("Digite 1 para exibir o texto\nDigite 2 para buscar uma palavra do texto\n");
         printf("Digite 3 para contar uma determinada palavra\nDigite 4 para contar o total de palavras\n");
@@ -69,8 +78,6 @@ int main()
         case 9:
             subStr(desc);
             break;
-        case 0:
-            return 0;
         default:
             break;
         }
