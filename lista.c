@@ -345,7 +345,7 @@ char **subString(struct descritor *desc, char *pal)
                 }
                 if (ehSub)
                 {
-                    for (int x = 0; x < quantRepetidas-1; x += 1)
+                    for (int x = 0; x < quantRepetidas - 1; x += 1)
                     {
                         if (strcmp(aux2->palavra, repetidas[x]) == 0)
                         {
@@ -356,14 +356,14 @@ char **subString(struct descritor *desc, char *pal)
                     if (!repetida)
                     {
                         quant += 1;
-                        retorno = realloc(retorno, sizeof(char *));
+                        retorno = realloc(retorno, quant*sizeof(char *));
                         retorno[quant - 2] = malloc(sizeof(aux2->palavra));
                         strcpy(retorno[quant - 2], aux2->palavra);
                     }
                     quantRepetidas += 1;
-                    repetidas = realloc(repetidas, sizeof(char *));
-                    repetidas[quantRepetidas - 2] = malloc(sizeof(aux2->palavra));
-                    strcpy(repetidas[quant - 2], aux2->palavra);
+                    repetidas = realloc(repetidas, quantRepetidas*sizeof(char *));
+                    repetidas[quantRepetidas - 2] = calloc(1,sizeof(aux2->palavra));
+                    strcpy(repetidas[quantRepetidas - 2], aux2->palavra);
                     repetida = FALSE;
                     break;
                 }
@@ -374,6 +374,8 @@ char **subString(struct descritor *desc, char *pal)
     }
     if (quant == 1)
         return NULL;
+    retorno = realloc(retorno, (quant+1)*sizeof(char *));
+    retorno[quant-2] = NULL;
     return retorno;
 }
 

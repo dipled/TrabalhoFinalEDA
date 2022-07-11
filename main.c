@@ -32,7 +32,7 @@ int main()
         printf("Digite 1 para exibir o texto\nDigite 2 para buscar uma palavra do texto\n");
         printf("Digite 3 para contar uma determinada palavra\nDigite 4 para contar o total de palavras\n");
         printf("Digite 5 para remover uma palavra\nDigite 6 para remover uma palavra de uma linha e coluna\n");
-        printf("Digite 7 para editar uma palavra\nDigite 9 para pesquisar uma palavra contendo um termo\n");
+        printf("Digite 7 para editar uma palavra\nDigite 8 para inserir uma palavra\nDigite 9 para pesquisar uma palavra contendo um termo\n");
         printf("Digite 0 para sair do programa\n");
         scanf("%d", &escolha);
         switch ((escolha))
@@ -151,12 +151,13 @@ void subStr(struct descritor *desc)
     printf("Digite um termo para ser buscado\n");
     scanf(" %[^\n]s", palavra);
     char **resultado = subString(desc, palavra);
-    if(resultado == NULL)
+    if (resultado == NULL)
     {
         printf("Nenhuma palavra com termo encontrada!\n");
         return;
     }
-    for (int i = 0; i < sizeof(resultado) / sizeof(char **); i += 1)
+    int i = 0;
+    while (resultado[i] != NULL)
     {
         printf("Palavra que contem termo encontrada! %s\n", resultado[i]);
         int *ocorrencia = buscaPalavra(desc, resultado[i]);
@@ -169,5 +170,6 @@ void subStr(struct descritor *desc)
             }
             printf("\n");
         }
+        i += 1;
     }
 }
