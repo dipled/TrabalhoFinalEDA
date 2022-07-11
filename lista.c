@@ -311,7 +311,7 @@ int removePalavraPos(struct descritor *desc, int lin, int col)
     }
     return removeu;
 }
-// funcao que dada uma string, retorna as ocorrencias das substrings. Gustavo Felipe
+// funcao que dada uma string, retorna as ocorrencias das substrings. Gustavo Felipe e Pedro Vargas
 char **subString(struct descritor *desc, char *pal)
 {
 
