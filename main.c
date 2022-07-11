@@ -148,14 +148,15 @@ void subStr(struct descritor *desc)
 
     char *palavra;
     palavra = calloc(40, sizeof(char));
-    printf("Digite um termo para ser buscada\n");
+    printf("Digite um termo para ser buscado\n");
     scanf(" %[^\n]s", palavra);
     char **resultado = subString(desc, palavra);
     if(resultado == NULL)
     {
-        printf("Nenhuma palavra com termo encontrada!");
+        printf("Nenhuma palavra com termo encontrada!\n");
+        return;
     }
-    for (int i = 0; i < sizeof(resultado) / sizeof(char *); i += 1)
+    for (int i = 0; i < sizeof(resultado) / sizeof(char **); i += 1)
     {
         printf("Palavra que contem termo encontrada! %s\n", resultado[i]);
         int *ocorrencia = buscaPalavra(desc, resultado[i]);
