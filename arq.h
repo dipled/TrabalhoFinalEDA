@@ -41,3 +41,5 @@ int edicaoPalavra(struct descritor *desc, int lin, int col, char *pal);
 int removePalavra(struct descritor *desc, char *palavra);
 int removePalavraPos(struct descritor *desc, int lin, int col);
 char **subString(struct descritor *desc, char *pal);
+int insercao(struct descritor *desc, char *palavra);
+int atualizaArquivo(struct descritor *desc, FILE *fp);

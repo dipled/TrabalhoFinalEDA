@@ -416,3 +416,72 @@ int edicaoPalavra(struct descritor *desc, int lin, int col, char *pal)
     }
     return editou;
 }
+
+int insercao(struct descritor *desc, char *palavra)
+{
+    struct noLinha *aux = malloc(sizeof(struct noLinha));
+    struct noPalavra *aux2 = malloc(sizeof(struct noPalavra));
+    int inseriu = FALSE;
+
+    if (aux == NULL || aux2 == NULL)
+        return -1;
+
+    aux = desc->primeiraLinha;
+    while (aux->proxLin != NULL)
+    {
+        aux = aux->proxLin;
+    }
+
+    aux2 = aux->primeiraPalavra;
+
+    while (aux2->proxPal != NULL)
+    {
+        aux2 = aux2->proxPal;
+    }
+    struct noPalavra *temp = malloc(sizeof(struct noPalavra));
+    temp->col = aux2->col + strlen(aux2->palavra) + 1;
+    strcpy(temp->palavra, palavra);
+    aux2->proxPal = temp;
+    temp->proxPal = NULL;
+    temp->antPal = aux2;
+    free(temp);
+    inseriu = TRUE;
+    return inseriu;
+}
+
+int atualizaArquivo(struct descritor *desc, FILE *fp)
+{
+    FILE *novoFp = fopen("arqTemp.txt","w");
+    if (novoFp == NULL)
+        return -1;
+    struct noLinha *aux = malloc(sizeof(struct noLinha));
+    struct noPalavra *aux2 = malloc(sizeof(struct noPalavra));
+
+    if (aux == NULL || aux2 == NULL)
+        return -1;
+
+    aux = desc->primeiraLinha;
+    while (aux != NULL)
+    {
+        int col = 1;
+        aux2 = aux->primeiraPalavra;
+        while (aux2->palavra != NULL)
+        {
+            while (col < aux2->col)
+            {
+                fprintf(novoFp, " ");
+                col += 1;
+            }
+            fprintf(novoFp, "%s", aux2->palavra);
+            col += strlen(aux2->palavra);
+            aux2 = aux2->proxPal;
+        }
+        fprintf(novoFp, "\n");
+        aux = aux->proxLin;
+    }
+    fclose(novoFp);
+    fclose(fp);
+    rename("teste.txt", "OldArquivo.txt");
+    rename("arqTemp.txt", "teste.txt");
+    return 1;
+}
