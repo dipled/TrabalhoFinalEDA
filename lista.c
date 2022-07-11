@@ -331,6 +331,7 @@ char **subString(struct descritor *desc, char *pal)
         aux2 = aux->primeiraPalavra;
         while (aux2->palavra != NULL)
         {
+            //Esse for verifica se a palavra eh substring da outra - Pedro Vargas
             for (int i = 0; aux2->palavra[i] != '\0'; i += 1)
             {
                 ehSub = FALSE;
@@ -345,6 +346,7 @@ char **subString(struct descritor *desc, char *pal)
                 }
                 if (ehSub)
                 {
+                    //Este for verifica se a palavra que foi encontrada nao eh repetida
                     for (int x = 0; x < quantRepetidas - 1; x += 1)
                     {
                         if (strcmp(aux2->palavra, repetidas[x]) == 0)
@@ -375,7 +377,7 @@ char **subString(struct descritor *desc, char *pal)
     if (quant == 1)
         return NULL;
     retorno = realloc(retorno, (quant)*sizeof(char *));
-    retorno[quant-1] = NULL;
+    retorno[quant-1] = NULL;//Mantem a ultima string do vetor de strings igual a NULL para percorrer ele na main - Pedro Vargas
     return retorno;
 }
 
