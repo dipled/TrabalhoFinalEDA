@@ -255,7 +255,6 @@ int removePalavra(struct descritor *desc, char *palavra)
                 else
                 {
                     aux->primeiraPalavra = aux2->proxPal;
-                    aux2->proxPal->antPal = NULL;
                 }
                 if (aux2->proxPal != NULL)
                 {
@@ -506,13 +505,15 @@ int destroi(struct descritor *desc)
     while (aux->proxLin != NULL)
     {
         aux2 = aux->primeiraPalavra;
-        while (aux2->proxPal != NULL)
-        {
-            aux2 = aux2->proxPal;
-            free(aux2->antPal);
-        }
         if (aux2 != NULL)
+        {
+            while (aux2->proxPal != NULL)
+            {
+                aux2 = aux2->proxPal;
+                free(aux2->antPal);
+            }
             free(aux2);
+        }
         aux = aux->proxLin;
         free(aux->antLin);
     }
