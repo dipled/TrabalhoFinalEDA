@@ -520,13 +520,15 @@ int destroi(struct descritor *desc)
     if (aux != NULL)
     {
         aux2 = aux->primeiraPalavra;
-        while (aux2->proxPal != NULL)
-        {
-            aux2 = aux2->proxPal;
-            free(aux2->antPal);
-        }
         if (aux2 != NULL)
+        {
+            while (aux2->proxPal != NULL)
+            {
+                aux2 = aux2->proxPal;
+                free(aux2->antPal);
+            }
             free(aux2);
+        }
         free(aux);
     }
     return 0;
