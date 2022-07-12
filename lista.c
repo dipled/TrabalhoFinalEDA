@@ -283,10 +283,16 @@ int removePalavraPos(struct descritor *desc, int lin, int col)
 
     while (aux != NULL)
     {
-        aux2 = aux->primeiraPalavra;
-        while (aux2->palavra != NULL)
+        if(aux->lin == lin)
+            break;
+        aux = aux->proxLin;
+    }
+    if(aux->lin != lin)
+        return -1;
+    aux2 = aux->primeiraPalavra;
+    while (aux2->palavra != NULL)
         {
-            if (aux->lin == lin && aux2->col == col)
+            if (aux2->col == col)
             {
                 removeu = TRUE;
                 if (aux2->antPal != NULL)
@@ -307,8 +313,6 @@ int removePalavraPos(struct descritor *desc, int lin, int col)
             }
             aux2 = aux2->proxPal;
         }
-        aux = aux->proxLin;
-    }
     return removeu;
 }
 // funcao que dada uma string, retorna as ocorrencias das substrings. Gustavo Felipe e Pedro Vargas
