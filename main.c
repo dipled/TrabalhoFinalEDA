@@ -21,7 +21,7 @@ int main()
         printf("Erro ao crirar descritor\n");
     }
     FILE *fp;
-    fp = fopen("teste.txt", "r");
+    fp = fopen("arq.txt", "r");
     if (fp == NULL)
     {
         printf("Erro ao abrir o arquivo\n");
@@ -200,6 +200,7 @@ void subStr(struct descritor *desc)
 }
 void insercaoPal(struct descritor *desc)
 {
+    fprintf(stderr,"\033[2J\033[H");
     char *palavra = calloc(40, sizeof(char));
     printf("Digite a palavra a ser inserida\n");
     scanf(" %[^\n]s", palavra);

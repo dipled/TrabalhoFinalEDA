@@ -490,8 +490,9 @@ int atualizaArquivo(struct descritor *desc, FILE *fp)
     }
     fclose(novoFp);
     fclose(fp);
-    rename("teste.txt", "OldArquivo.txt");
-    rename("arqTemp.txt", "teste.txt");
+    remove("OldArquivo.txt");
+    rename("arq.txt", "OldArquivo.txt");
+    rename("arqTemp.txt", "arq.txt");
     return 1;
 }
 // Funcao que destroi lista - Pedro Vargas
