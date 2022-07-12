@@ -447,7 +447,7 @@ int insercao(struct descritor *desc, char *palavra)
     inseriu = TRUE;
     return inseriu;
 }
-
+//Funcao que salva o arquivo por Gustavo Kon
 int atualizaArquivo(struct descritor *desc, FILE *fp)
 {
     FILE *novoFp = fopen("arqTemp.txt","w");
@@ -483,4 +483,38 @@ int atualizaArquivo(struct descritor *desc, FILE *fp)
     rename("teste.txt", "OldArquivo.txt");
     rename("arqTemp.txt", "teste.txt");
     return 1;
+}
+//Funcao que destroi lista - Pedro Vargas
+int destroi(struct descritor *desc){
+    struct noLinha *aux = malloc(sizeof(struct noLinha));
+    struct noPalavra *aux2 = malloc(sizeof(struct noPalavra));
+    if((aux == NULL) | (aux2 == NULL))
+        return -1;
+    aux = desc->primeiraLinha;
+    while(aux->proxLin != NULL)
+    {
+        aux2=aux->primeiraPalavra;
+        while(aux2->proxPal != NULL)
+        {
+            aux2 = aux2->proxPal;
+            free(aux2->antPal);
+        }
+        if(aux2!=NULL)
+            free(aux2);
+        aux = aux->proxLin;
+        free(aux->antLin);
+    }
+    if(aux!=NULL) 
+    {
+        aux2=aux->primeiraPalavra;
+        while(aux2->proxPal != NULL)
+        {
+            aux2 = aux2->proxPal;
+            free(aux2->antPal);
+        }
+        if(aux2!=NULL)
+            free(aux2);
+        free(aux);
+    }
+    return 0;
 }

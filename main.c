@@ -37,6 +37,7 @@ int main()
             scanf("%d",&escolha);
             if(escolha == 0){
                 atualizaArq(desc,fp);
+                destroi(desc);
                 if(desc!=NULL)
                     free(desc);
                 return 0;
