@@ -278,7 +278,7 @@ int removePalavraPos(struct descritor *desc, int lin, int col)
     int removeu = FALSE;
 
     if (aux == NULL || aux2 == NULL)
-        return -1;
+        return -2;
     aux = desc->primeiraLinha;
 
     while (aux != NULL)
@@ -287,10 +287,10 @@ int removePalavraPos(struct descritor *desc, int lin, int col)
             break;
         aux = aux->proxLin;
     }
-    if(aux->lin != lin)
-        return -1;
+    if(aux==NULL)
+        return 0;
     aux2 = aux->primeiraPalavra;
-    while (aux2->palavra != NULL)
+    while (aux2 != NULL)
         {
             if (aux2->col == col)
             {
@@ -302,7 +302,6 @@ int removePalavraPos(struct descritor *desc, int lin, int col)
                 else
                 {
                     aux->primeiraPalavra = aux2->proxPal;
-                    aux2->proxPal->antPal = NULL;
                 }
                 if (aux2->proxPal != NULL)
                 {

@@ -147,7 +147,7 @@ void removePos(struct descritor *desc)
     int lin, col;
     printf("Digite a linha e a coluna da palavra a ser removida\n");
     scanf("%d %d", &lin, &col);
-    if (removePalavraPos(desc, lin, col))
+    if (removePalavraPos(desc, lin, col) == 1)
         printf("Palavra removida com sucesso\n");
     else
         printf("Palavra nao encontrada\n");
