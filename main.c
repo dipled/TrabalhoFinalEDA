@@ -2,11 +2,6 @@
 #include <string.h>
 #include <stdlib.h>
 #include "arq.h"
-#ifdef WIN32
-#define CLEAR "cls"
-#else
-#define CLEAR "clear"
-#endif
 void exibe(struct descritor *desc);
 void removePal(struct descritor *desc);
 void removePos(struct descritor *desc);
