@@ -283,35 +283,35 @@ int removePalavraPos(struct descritor *desc, int lin, int col)
 
     while (aux != NULL)
     {
-        if(aux->lin == lin)
+        if (aux->lin == lin)
             break;
         aux = aux->proxLin;
     }
-    if(aux==NULL)
+    if (aux == NULL)
         return 0;
     aux2 = aux->primeiraPalavra;
     while (aux2 != NULL)
+    {
+        if (aux2->col == col)
         {
-            if (aux2->col == col)
+            removeu = TRUE;
+            if (aux2->antPal != NULL)
             {
-                removeu = TRUE;
-                if (aux2->antPal != NULL)
-                {
-                    aux2->antPal->proxPal = aux2->proxPal;
-                }
-                else
-                {
-                    aux->primeiraPalavra = aux2->proxPal;
-                }
-                if (aux2->proxPal != NULL)
-                {
-                    aux2->proxPal->antPal = aux2->antPal;
-                }
-                free(aux2);
-                aux->numPalavras -= 1;
+                aux2->antPal->proxPal = aux2->proxPal;
             }
-            aux2 = aux2->proxPal;
+            else
+            {
+                aux->primeiraPalavra = aux2->proxPal;
+            }
+            if (aux2->proxPal != NULL)
+            {
+                aux2->proxPal->antPal = aux2->antPal;
+            }
+            free(aux2);
+            aux->numPalavras -= 1;
         }
+        aux2 = aux2->proxPal;
+    }
     return removeu;
 }
 // funcao que dada uma string, retorna as ocorrencias das substrings. Gustavo Felipe e Pedro Vargas
@@ -334,7 +334,7 @@ char **subString(struct descritor *desc, char *pal)
         aux2 = aux->primeiraPalavra;
         while (aux2->palavra != NULL)
         {
-            //Esse for verifica se a palavra eh substring da outra - Pedro Vargas
+            // Esse for verifica se a palavra eh substring da outra - Pedro Vargas
             for (int i = 0; aux2->palavra[i] != '\0'; i += 1)
             {
                 ehSub = FALSE;
@@ -349,7 +349,7 @@ char **subString(struct descritor *desc, char *pal)
                 }
                 if (ehSub)
                 {
-                    //Este for verifica se a palavra que foi encontrada nao eh repetida
+                    // Este for verifica se a palavra que foi encontrada nao eh repetida
                     for (int x = 0; x < quantRepetidas - 1; x += 1)
                     {
                         if (strcmp(aux2->palavra, repetidas[x]) == 0)
@@ -361,13 +361,13 @@ char **subString(struct descritor *desc, char *pal)
                     if (!repetida)
                     {
                         quant += 1;
-                        retorno = realloc(retorno, quant*sizeof(char *));
+                        retorno = realloc(retorno, quant * sizeof(char *));
                         retorno[quant - 2] = malloc(sizeof(aux2->palavra));
                         strcpy(retorno[quant - 2], aux2->palavra);
                     }
                     quantRepetidas += 1;
-                    repetidas = realloc(repetidas, quantRepetidas*sizeof(char *));
-                    repetidas[quantRepetidas - 2] = calloc(1,sizeof(aux2->palavra));
+                    repetidas = realloc(repetidas, quantRepetidas * sizeof(char *));
+                    repetidas[quantRepetidas - 2] = calloc(1, sizeof(aux2->palavra));
                     strcpy(repetidas[quantRepetidas - 2], aux2->palavra);
                     repetida = FALSE;
                     break;
@@ -379,8 +379,8 @@ char **subString(struct descritor *desc, char *pal)
     }
     if (quant == 1)
         return NULL;
-    retorno = realloc(retorno, (quant)*sizeof(char *));
-    retorno[quant-1] = NULL;//Mantem a ultima string do vetor de strings igual a NULL para percorrer ele na main - Pedro Vargas
+    retorno = realloc(retorno, (quant) * sizeof(char *));
+    retorno[quant - 1] = NULL; // Mantem a ultima string do vetor de strings igual a NULL para percorrer ele na main - Pedro Vargas
     return retorno;
 }
 
@@ -394,29 +394,36 @@ int edicaoPalavra(struct descritor *desc, int lin, int col, char *pal)
     if (aux == NULL || aux2 == NULL)
         return -1;
     aux = desc->primeiraLinha;
+
     while (aux != NULL)
     {
-        aux2 = aux->primeiraPalavra;
-        while (aux2->palavra != NULL)
-        {
-            if (aux->lin == lin && aux2->col == col)
-            {
-                editou = TRUE;
-                espaco = strlen(pal) - strlen(aux2->palavra);
-                strcpy(aux2->palavra, pal);
-                if (aux2->proxPal != NULL)
-                {
-                    while (aux2->proxPal != NULL)
-                    {
-                        aux2->proxPal->col = aux2->proxPal->col + espaco;
-                        aux2 = aux2->proxPal;
-                    }
-                }
-            }
-            aux2 = aux2->proxPal;
-        }
+        if (aux->lin == lin)
+            break;
         aux = aux->proxLin;
     }
+    if (aux == NULL)
+        return 0;
+    aux2 = aux->primeiraPalavra;
+    while (aux2->palavra != NULL)
+    {
+        if (aux2->col == col)
+        {
+            editou = TRUE;
+            espaco = strlen(pal) - strlen(aux2->palavra);
+            strcpy(aux2->palavra, pal);
+            if (aux2->proxPal != NULL)
+            {
+                while (aux2->proxPal != NULL)
+                {
+                    aux2->proxPal->col = aux2->proxPal->col + espaco;
+                    aux2 = aux2->proxPal;
+                }
+            }
+        }
+        aux2 = aux2->proxPal;
+    }
+    aux = aux->proxLin;
+
     return editou;
 }
 
@@ -450,17 +457,17 @@ int insercao(struct descritor *desc, char *palavra)
     inseriu = TRUE;
     return inseriu;
 }
-//Funcao que salva o arquivo por Gustavo Kon
+// Funcao que salva o arquivo por Gustavo Kon
 int atualizaArquivo(struct descritor *desc, FILE *fp)
 {
-    FILE *novoFp = fopen("arqTemp.txt","w");
+    FILE *novoFp = fopen("arqTemp.txt", "w");
     if (novoFp == NULL)
-        return -1;
+        return 0;
     struct noLinha *aux = malloc(sizeof(struct noLinha));
     struct noPalavra *aux2 = malloc(sizeof(struct noPalavra));
 
     if (aux == NULL || aux2 == NULL)
-        return -1;
+        return 0;
 
     aux = desc->primeiraLinha;
     while (aux != NULL)
@@ -487,35 +494,36 @@ int atualizaArquivo(struct descritor *desc, FILE *fp)
     rename("arqTemp.txt", "teste.txt");
     return 1;
 }
-//Funcao que destroi lista - Pedro Vargas
-int destroi(struct descritor *desc){
+// Funcao que destroi lista - Pedro Vargas
+int destroi(struct descritor *desc)
+{
     struct noLinha *aux = malloc(sizeof(struct noLinha));
     struct noPalavra *aux2 = malloc(sizeof(struct noPalavra));
-    if((aux == NULL) | (aux2 == NULL))
+    if ((aux == NULL) | (aux2 == NULL))
         return -1;
     aux = desc->primeiraLinha;
-    while(aux->proxLin != NULL)
+    while (aux->proxLin != NULL)
     {
-        aux2=aux->primeiraPalavra;
-        while(aux2->proxPal != NULL)
+        aux2 = aux->primeiraPalavra;
+        while (aux2->proxPal != NULL)
         {
             aux2 = aux2->proxPal;
             free(aux2->antPal);
         }
-        if(aux2!=NULL)
+        if (aux2 != NULL)
             free(aux2);
         aux = aux->proxLin;
         free(aux->antLin);
     }
-    if(aux!=NULL) 
+    if (aux != NULL)
     {
-        aux2=aux->primeiraPalavra;
-        while(aux2->proxPal != NULL)
+        aux2 = aux->primeiraPalavra;
+        while (aux2->proxPal != NULL)
         {
             aux2 = aux2->proxPal;
             free(aux2->antPal);
         }
-        if(aux2!=NULL)
+        if (aux2 != NULL)
             free(aux2);
         free(aux);
     }
