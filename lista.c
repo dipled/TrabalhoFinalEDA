@@ -456,7 +456,7 @@ int insercao(struct descritor *desc, char *palavra)
     inseriu = TRUE;
     return inseriu;
 }
-// Funcao que salva o arquivo por Gustavo Kon
+// Funcao que salva o arquivo por Gustavo Konescki Fuhr
 int atualizaArquivo(struct descritor *desc, FILE *fp)
 {
     FILE *novoFp = fopen("arqTemp.txt", "w");

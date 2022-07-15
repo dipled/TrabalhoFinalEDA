@@ -19,13 +19,14 @@ int main()
     if (desc == NULL)
     {
         printf("Erro ao crirar descritor\n");
+        return -1;
     }
     FILE *fp;
     fp = fopen("arq.txt", "r");
     if (fp == NULL)
     {
         printf("Erro ao abrir o arquivo\n");
-        return -1;
+        return -2;
     }
     importaTexto(desc, fp);
     int escolha = -234;
@@ -103,6 +104,8 @@ void conta(struct descritor *desc)
     printf("Digite uma palavra para ser contada\n");
     scanf(" %[^\n]s", palavra);
     printf("A palavra %s ocorre %d vezes\n", palavra, numTotalCertaPalavra(desc, palavra));
+    if(palavra != NULL) 
+        free(palavra);
 }
 void busca(struct descritor *desc)
 {
@@ -125,6 +128,10 @@ void busca(struct descritor *desc)
         }
         printf("\n");
     }
+    if(palavra != NULL) 
+        free(palavra);
+        if(ocorrencia != NULL) 
+        free(ocorrencia);
 }
 void removePal(struct descritor *desc)
 {
@@ -140,6 +147,8 @@ void removePal(struct descritor *desc)
     {
         printf("Erro ao remover a palavra\n");
     }
+    if(palavra != NULL)
+        free(palavra);
 }
 void removePos(struct descritor *desc)
 {
@@ -165,6 +174,8 @@ void edita(struct descritor *desc)
         printf("Palavra editada com sucesso\n");
     else
         printf("Palavra nao encontrada\n");
+    if(palavra != NULL) 
+        free(palavra);
 }
 
 void subStr(struct descritor *desc)
@@ -197,6 +208,10 @@ void subStr(struct descritor *desc)
         }
         i += 1;
     }
+    if(palavra != NULL) 
+        free(palavra);
+    if(resultado != NULL)
+        free(resultado);
 }
 void insercaoPal(struct descritor *desc)
 {
@@ -208,6 +223,8 @@ void insercaoPal(struct descritor *desc)
         printf("Palavra inserida com sucesso\n");
     else
         printf("Erro ao inserir a palavra\n");
+    if(palavra!=NULL)
+        free(palavra);
 }
 void atualizaArq(struct descritor *desc, FILE *fp)
 {
